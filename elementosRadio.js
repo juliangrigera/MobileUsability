@@ -1,19 +1,23 @@
+function intersectan(center_x, center_y, radio, elemRect){
+ 
+
+}
+
 function elementosRadio(radio){
     window.addEventListener("click", (e) => {
         let todos = document.getElementsByTagName("*");
-      
-    for (var i=0, max=todos.length; i < max; i++) {
-        //ESTE FOR RECORRE TODOS LOS ELEMENTOS DE LA PAGINA
-    }
+        var center_x = e.clientX;
+        var center_y = e.clientY;
+        console.log("Las coordenadas del click son x: " +center_x+" y:"+center_y)  
+        console.log("El radio seleccionado es de: "+radio+"px");
+        console.log("Los elementos son: ");
+        for (var i=0, max=todos.length; i < max; i++) {
+            /*
+            
+            if(intersectan(cir, todos[i].getBoundingClientRect())){
+        console.log(todos[i].getBoundingClientRect())    }
     
-    //ESTA PARTE TOMA LAS COORDENADAS DEL CLICK Y LAS IMPRIME EN PANTALLA
-    
-    var x = e.clientX;
-      var y = e.clientY;
-      var coords = "X coords: " + x + ", Y coords: " + y;
-    
-    
-    console.log(coords);  
-    }
+*/
+    }}
     )}
     elementosRadio(4);
