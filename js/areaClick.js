@@ -14,7 +14,7 @@ export default class AreaClick{
 		return point;
     }
 	
-	static newCircunferencia(pointx,pointy,ratio){
+	static newCircumference(pointx,pointy,ratio){
 		let point = new AreaClick();
 		point.ejex = pointx;
 		point.ejey = pointy;
@@ -33,7 +33,18 @@ export default class AreaClick{
     }
 	
 	printCircumference(){
-		return `pointX = ${this.ejex} pointY =  ${this.ejey} ratio = ${this.ratio}`;
+		return `Center =(${this.ejex},${this.ejey}) ratio = ${this.ratio}`;
+	}
+	
+	printRectanglePoints( aX,aY, bX,bY, cX,cY, dX,dY ){
+		return `point B(${bX},${bY}) \t \t point C(${cX},${cY}) \npoint A(${aX},${aY}) \t \t point D(${dX},${dY}) `;
+	}
+	
+	printRectangle(originX,originY, high, width){
+	
+		return this.printRectanglePoints(
+			originX,originY, originX,originY+high, originX+width,originY+high, originX+width,originY
+										);
 	}
 	
 	//determina si el punto esta en la circunferencia
@@ -56,5 +67,67 @@ export default class AreaClick{
 		return this.calculateCateto(pointx, this.ejex) + this.calculateCateto(pointy, this.ejey);
 	}
 	
+					
+//	point 	Y |	|-------------|
+//			__|_________________
+//	initialPointX	finalPointX
+	isIntersectionLineX(initialPointX, finalPointX, pointY){
+		//retorna true si algun punto de la lineaX horizontal esta en el circulo
+		for(let f=initialPointX; f <= finalPointX ;f++){
+			
+			if( this.isCircumferencePoint(f, pointY) ){ 
+				return true; 
+			}
+		}
+		return false;
+	}
+	
+//		  |  = finalPointY
+//		  |  = initialPointY
+//		_________________
+//	point x
+	isIntersectionLineY(initialPointY, finalPointY, pointX){
+		//retorna true si algun punto de la lineaY vertical esta en el circulo
+		for(let f=initialPointY; f <= finalPointY ;f++){
+			
+			if( this.isCircumferencePoint(pointX, f) ){ 
+				return true; 
+			}
+		}
+		return false;
+	}
+	
+	
+//	indicacion de las esquinas del rectangulo
+//		B	C
+//		A	D
+//	A = origen
+	
+	isIntersectionRectangleCornersPoints( aX,aY, bX,bY, cX,cY, dX,dY ){
+		
+		//linea Vertical ejeY de   A -> B
+		if( this.isIntersectionLineY( aY, bY,aX ) ){ return true };
+		//linea Vertical ejeY de   D -> C
+		if( this.isIntersectionLineY( dY, cY,dX ) ){ return true };
+		
+		//linea Horizontal ejeX de  A -> D
+		if( this.isIntersectionLineX( aX, dX,aY ) ){ return true };
+		//linea Horizontal ejeX de  B -> C
+		if( this.isIntersectionLineX( bX, cX,bY ) ){ return true };
+		
+		return false;
+	}
+	
+//		high	
+//		A	   width
+//	A = origen
     
+	isIntersectionRectangle( originX,originY, high, width ){
+
+		return this.isIntersectionRectangleCornersPoints(
+			originX,originY, originX,originY+high, originX+width,originY+high, originX+width,originY
+														);
+	}
+	
+	
 }
