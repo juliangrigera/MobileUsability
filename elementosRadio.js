@@ -1,5 +1,9 @@
-function intersectan(center_x, center_y, radio, elemRect){
- 
+function intersectan(center_x, center_y, radio, rect){
+    var dx = Math.max(rect.left - center_x, 0, center_x - rect.right);
+    var dy = Math.max(rect.bottom - center_y, 0, center_y - rect.top);
+    var minDist =  Math.sqrt(dx*dx + dy*dy);
+
+    return minDist <= radio;
 
 }
 
@@ -12,12 +16,10 @@ function elementosRadio(radio){
         console.log("El radio seleccionado es de: "+radio+"px");
         console.log("Los elementos son: ");
         for (var i=0, max=todos.length; i < max; i++) {
-            /*
-            
-            if(intersectan(cir, todos[i].getBoundingClientRect())){
-        console.log(todos[i].getBoundingClientRect())    }
+            if(intersectan(center_x, center_y, radio, todos[i].getBoundingClientRect())){
+        console.log(todos[i])  }
     
-*/
+
     }}
     )}
-    elementosRadio(4);
+    elementosRadio(50);
