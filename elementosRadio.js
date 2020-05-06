@@ -7,8 +7,10 @@ function intersectan(center_x, center_y, radio, rect){
 
 }
 
-function elementosRadio(radio){
+function elementosRadio(){
+    
     window.addEventListener("click", (e) => {
+        var radio = prompt("Ingrese el valor del radio en px");
         let todos = document.getElementsByTagName("*");
         var center_x = e.clientX;
         var center_y = e.clientY;
@@ -22,4 +24,4 @@ function elementosRadio(radio){
 
     }}
     )}
-    elementosRadio(50);
+   elementosRadio();
