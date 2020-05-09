@@ -1,0 +1,7 @@
+consigna: 
+interceptar el evento “zoom” con el celular e informar lugar donde fue hecho, porcentaje, etc
+
+resolución:
+-hay dos scripts
+ 	1er script : "script_test  es una prueba de que cuando tocas en la pantalla , se activa el evento en la consola y devuelve info del elemento touched " (funciona)
+	2do script : desarrollo del requerimiento , manejar el evento de "pinch_zoom" 
