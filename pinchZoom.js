@@ -41,12 +41,12 @@ function pointermove_handler(ev) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
   
-       zoomElement.style.background = "pink";
+       zoomElement.style.backgroundColor = "pink";
      }
      if (curDiff < prevDiff) {
        // The distance between the two pointers has decreased
   
-       zoomElement.style.background = "lightblue";
+       zoomElement.style.backgroundColor = "lightblue";
      }
    }
 
