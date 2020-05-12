@@ -79,15 +79,14 @@ function remove_event(ev) {
 
 function init() {
  // Install event handlers for the pointer target
- var el=document.getElementsByTagName("html");
- el.onpointerdown = pointerdown_handler;
- el.onpointermove = pointermove_handler;
+ document.onpointerdown = pointerdown_handler;
+ document.onpointermove = pointermove_handler;
 
  // Use same handler for pointer{up,cancel,out,leave} events since
  // the semantics for these events - in this app - are the same.
- el.onpointerup = pointerup_handler;
- el.onpointercancel = pointerup_handler;
- el.onpointerout = pointerup_handler;
- el.onpointerleave = pointerup_handler;
+ document.onpointerup = pointerup_handler;
+ document.onpointercancel = pointerup_handler;
+ document.onpointerout = pointerup_handler;
+ document.onpointerleave = pointerup_handler;
 }
 
