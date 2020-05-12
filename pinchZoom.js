@@ -23,7 +23,7 @@ function pointermove_handler(ev) {
  // indicate the pointer's target received a move event.
 
  ev.target.style.border = "dashed";
-
+ var zoomElement = document.getElementById("zoomPinch"); 
  // Find this event in the cache and update its record with this event
  for (var i = 0; i < evCache.length; i++) {
    if (ev.pointerId == evCache[i].pointerId) {
@@ -41,12 +41,12 @@ function pointermove_handler(ev) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
   
-       ev.target.style.background = "pink";
+       zoomElement.style.background = "pink";
      }
      if (curDiff < prevDiff) {
        // The distance between the two pointers has decreased
   
-       ev.target.style.background = "lightblue";
+       zoomElement.style.background = "lightblue";
      }
    }
 
