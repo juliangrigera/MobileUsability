@@ -23,7 +23,7 @@ function pointermove_handler(ev) {
  // indicate the pointer's target received a move event.
 
  ev.target.style.border = "dashed";
- var zoomElement = document.getElementById("zoomPinch"); 
+ var zoomElement = document.getElementsByClassName("zoomPinch"); 
  // Find this event in the cache and update its record with this event
  for (var i = 0; i < evCache.length; i++) {
    if (ev.pointerId == evCache[i].pointerId) {
@@ -78,15 +78,15 @@ function remove_event(ev) {
 }
 
 function init() {
- // Install event handlers for the pointer target
- document.onpointerdown = pointerdown_handler;
- document.onpointermove = pointermove_handler;
+  var el=document.getElementById("target");
+  el.onpointerdown = pointerdown_handler;
+  el.onpointermove = pointermove_handler;
 
  // Use same handler for pointer{up,cancel,out,leave} events since
  // the semantics for these events - in this app - are the same.
- document.onpointerup = pointerup_handler;
- document.onpointercancel = pointerup_handler;
- document.onpointerout = pointerup_handler;
- document.onpointerleave = pointerup_handler;
+ el.onpointerup = pointerup_handler;
+ el.onpointercancel = pointerup_handler;
+ el.onpointerout = pointerup_handler;
+ el.onpointerleave = pointerup_handler;
 }
 

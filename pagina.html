@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+#target {
+    margin: 0em;
+    padding: 2em;
+    background: white;
+    border: 1px solid black;
+  }
+
 body {
   font-family: Arial;
   padding: 10px;
@@ -112,11 +119,8 @@ body {
   }
 }
 </style>
-<script src="scriptDot.js"></script>
-<script src="elementosRadio.js"></script>
-<script src="pinchZoom.js"></script>
 </head>
-<body>
+<body onload="init();" style="touch-action:none">
 <div class="header">
   <h1>My Website</h1>
   <p>Resize the browser window to see the effect.</p>
@@ -134,7 +138,9 @@ body {
     <div  class="card">
       <h2>ZOOM PINCH</h2>
       <h5>Información del zoom pinch</h5>
-      <div class="fakeimg" id="zoomPinch" style="height:200px;">Image</div>
+      <div id="target" style="height:200px;">Touch and Hold with 2 pointers, then pinch in or out.<br/>
+        The background color will change to pink if the pinch is opening (Zoom In) 
+        or changes to lightblue if the pinch is closing (Zoom out).</div>
       <p>Cambia a color rosa si el zoom se expande, celeste cuando se achica</p>
       
     </div>
@@ -164,10 +170,11 @@ body {
     </div>
   </div>
 </div>
-
 <div class="footer">
   <h2>Footer</h2>
 </div>
-
+<script src="scriptDot.js"></script>
+<script src="elementosRadio.js"></script>
+<script src="pinchZoom.js"></script>
 </body>
 </html>
