@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html onload="init();">
+<html>
 <head>
 <style>
 * {
@@ -103,6 +103,11 @@ body {
   margin-top: 20px;
 }
 
+.zoomInfo{
+  font-size: xx-large;
+
+}
+
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
   .leftcolumn, .rightcolumn {   
@@ -119,8 +124,9 @@ body {
   }
 }
 </style>
+<meta charset="utf-8">
 </head>
-<body onload="init();" style="touch-action:none">
+<body  style="touch-action:none">
 <div class="header">
   <h1>My Website</h1>
   <p>Resize the browser window to see the effect.</p>
@@ -138,9 +144,11 @@ body {
     <div  class="card">
       <h2>ZOOM PINCH</h2>
       <h5>Información del zoom pinch</h5>
-      <div id="target" style="height:200px;">Touch and Hold with 2 pointers, then pinch in or out.<br/>
-        The background color will change to pink if the pinch is opening (Zoom In) 
-        or changes to lightblue if the pinch is closing (Zoom out).</div>
+      <div id="target" style="height:200px;">
+      <p class="zoomInfo">Touch 1 X: <span id="t1X">   </span> Y: <span id="t1Y"></span></p> 
+      <p class="zoomInfo">Touch 2 X: <span id="t2X">   </span> Y: <span id="t2Y"></span></p>
+      
+      </div>
       <p>Cambia a color rosa si el zoom se expande, celeste cuando se achica</p>
       
     </div>
@@ -175,6 +183,9 @@ body {
 </div>
 <script src="scriptDot.js"></script>
 <script src="elementosRadio.js"></script>
-<script src="pinchZoom.js"></script>
+<script src="pinchZoom.js">
+
+  
+</script>
 </body>
 </html>

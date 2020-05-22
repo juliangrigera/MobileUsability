@@ -23,7 +23,6 @@ function pointermove_handler(ev) {
  // indicate the pointer's target received a move event.
 
  ev.target.style.border = "dashed";
- var zoomElement = document.getElementsByClassName("zoomPinch"); 
  // Find this event in the cache and update its record with this event
  for (var i = 0; i < evCache.length; i++) {
    if (ev.pointerId == evCache[i].pointerId) {
@@ -36,17 +35,20 @@ function pointermove_handler(ev) {
  if (evCache.length == 2) {
    // Calculate the distance between the two pointers
    var curDiff = Math.abs(evCache[0].clientX - evCache[1].clientX);
-
+   document.getElementById("t1X").innerText = evCache[0].clientX.toFixed(2);
+   document.getElementById("t2X").innerText = evCache[1].clientX.toFixed(2);
+   document.getElementById("t1Y").innerText = evCache[0].clientY.toFixed(2);
+   document.getElementById("t2Y").innerText = evCache[1].clientY.toFixed(2);
    if (prevDiff > 0) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
   
-       zoomElement.style.backgroundColor = "pink";
+       zoomInfo.style.background  = "pink";
      }
      if (curDiff < prevDiff) {
        // The distance between the two pointers has decreased
   
-       zoomElement.style.backgroundColor = "lightblue";
+       zoomInfo.style.background  = "lightblue";
      }
    }
 
@@ -77,16 +79,18 @@ function remove_event(ev) {
  }
 }
 
-function init() {
-  var el=document.getElementById("target");
-  el.onpointerdown = pointerdown_handler;
-  el.onpointermove = pointermove_handler;
+
+
+
+  var zoomInfo=document.getElementById("target");
+  window.onpointerdown = pointerdown_handler;
+  window.onpointermove = pointermove_handler;
 
  // Use same handler for pointer{up,cancel,out,leave} events since
  // the semantics for these events - in this app - are the same.
- el.onpointerup = pointerup_handler;
- el.onpointercancel = pointerup_handler;
- el.onpointerout = pointerup_handler;
- el.onpointerleave = pointerup_handler;
-}
+ window.onpointerup = pointerup_handler;
+ window.onpointercancel = pointerup_handler;
+ window.onpointerout = pointerup_handler;
+ window.onpointerleave = pointerup_handler;
+
 
