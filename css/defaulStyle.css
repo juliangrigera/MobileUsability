@@ -44,7 +44,7 @@
     font-size: xx-large;
   
   }
-  
+
   /* Style the top navigation bar */
   .topnav {
     overflow: hidden;
@@ -61,11 +61,7 @@
     text-decoration: none;
   }
   
-  /* Change color on hover */
-  .topnav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
+
   
   /* Create two unequal columns that floats next to each other */
   /* Left column */
