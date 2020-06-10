@@ -15,6 +15,22 @@
     box-shadow: -8px -11px 63px 9px rgba(0,0,0,0.75);
     /* background-color:cadetblue; */
   }
+
+  .boxShadowZoomOut{
+    /* border-style: solid; */
+    -webkit-box-shadow: -8px -11px 63px 9px pink;
+    -moz-box-shadow: -8px -11px 63px 9px pink;
+    box-shadow: -8px -11px 63px 9px pink;
+    /* background-color:cadetblue; */
+  }
+
+  .boxShadowZoomIn{
+    /* border-style: solid; */
+    -webkit-box-shadow: -8px -11px 63px 9px lightblue;
+    -moz-box-shadow: -8px -11px 63px 9px lightblue;
+    box-shadow: -8px -11px 63px 9px lightblue;
+    /* background-color:cadetblue; */
+  }
   
   #target {
     margin: 0em;
