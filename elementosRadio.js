@@ -14,7 +14,7 @@ function elementosRadio(){
     window.addEventListener("click", (event) => {
 
         printProperties( event.clientX, event.clientY, 55 );
-
+        logEventPharo( event.clientX, event.clientY);
         removeDotItemPrevious();
         removeStyleElementsInRadioPrevious();
 
@@ -87,6 +87,23 @@ function printProperties( center_x, center_y, radio){
     console.log("*********************************************");
     console.log("Las coordenadas del click son x: " +center_x+" y:"+center_y)  
     console.log("El radio seleccionado es de: "+radio+"px");
+}
+
+function logEventPharo (center_x, center_y) {
+    var http = new XMLHttpRequest ();
+    var url = "http://localhost:1701/prueba";
+
+
+    http.open("POST", url, true);
+
+
+    http.onreadystatechange = function() {
+        if(http.readyState == 4 && http.status == 200) { 
+        //aqui obtienes la respuesta de tu peticion
+        alert(http.responseText);
+        }
+    }
+    http.send(JSON.stringify({x:center_x,y:center_y}));
 }
 
 elementosRadio();
