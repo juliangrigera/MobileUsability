@@ -23,25 +23,8 @@ function elementosRadio(){
         //asignarle a los elemetos un style
         //addStyleElementsInRadio( htmlElements );
 
-//HTTP REQUEST POST. La url es temporal y está generada con Ngrok
 
-var http = new XMLHttpRequest();
-var url = "http://7e9283aa48d2.ngrok.io/mobile";
-http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-http.open("POST", url, true);
 
-http.onreadystatechange = function() {
-    if(http.readyState == 4 && http.status == 200) { 
-       //aqui obtienes la respuesta de tu peticion
-       alert(http.responseText);
-    }
-}
-http.send(JSON.stringify(event));
-    
-        writeDotItem();
-
-    });
-}
 
 function removeDotItemPrevious(){
     let dot=document.getElementById("dot");
