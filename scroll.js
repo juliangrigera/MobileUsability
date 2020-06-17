@@ -8,6 +8,8 @@ function getRandomColor() {
   }
 
 window.addEventListener("scroll",event => {
-  document.getElementById("scrollTest").background = getRandomColor();
+  document.getElementById("scrollY").innerText = window.scrollY.toFixed(2);
+  document.getElementById("scrollX").innerText = window.scrollX.toFixed(2);
+
   });   
 

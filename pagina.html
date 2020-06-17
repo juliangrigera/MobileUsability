@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="css/defaulStyle.css">
 
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 <body>
@@ -35,8 +36,11 @@
     <div class="card">
       <h2>SCROLL</h2>
       <h5>Información del scroll</h5>
-      <div class="scrollTest" style="height:200px;"></div>
-      <p>Cambia de color si el usuario hace scroll</p>
+      <div class="scrollTest" id="scrollTest" style="height:200px;">
+        <p class="zoomInfo">Scroll X: <span id="scrollX">  </span> </p> 
+        <p class="zoomInfo">Scroll Y: <span id="scrollY">   </span></p>
+      </div>
+      
     </div>
   </div>
   <div class="rightcolumn">
