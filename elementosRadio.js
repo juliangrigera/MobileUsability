@@ -22,6 +22,10 @@ function elementosRadio(){
         let htmlElements = elementsInRadio( event.clientX, event.clientY, 55,  document.getElementsByTagName("*") );
         //asignarle a los elemetos un style
         //addStyleElementsInRadio( htmlElements );
+        writeDotItem();
+
+    });
+}
 
 
 
