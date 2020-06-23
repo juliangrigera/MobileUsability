@@ -5,11 +5,16 @@ function getRandomColor() {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
+  };
 
-window.addEventListener("scroll",event => {
-  document.getElementById("scrollY").innerText = window.scrollY.toFixed(2);
-  document.getElementById("scrollX").innerText = window.scrollX.toFixed(2);
+  document.getElementById("scrollTest").addEventListener("scroll",event => {
+  
+    var elmnt = document.getElementById("scrollTest");
+    var x = elmnt.scrollLeft;
+    var y = elmnt.scrollTop;
+
+    document.getElementById ("scrollX").innerHTML =  x + "px";
+    document.getElementById ("scrollY").innerHTML =  y + "px";
 
   });   
 

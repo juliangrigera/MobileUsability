@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <link rel="stylesheet" href="css/defaulStyle.css">
+  <link rel="stylesheet" href="css/scrollStyle.css">
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,15 +34,28 @@
       <p>Cambia a color rosa si el zoom se expande, celeste cuando se achica</p>
       
     </div>
-    <div class="card">
+
+    <div id="scrollEvent" class="card">
       <h2>SCROLL</h2>
       <h5>Información del scroll</h5>
-      <div class="scrollTest" id="scrollTest" style="height:200px;">
-        <p class="zoomInfo">Scroll X: <span id="scrollX">  </span> </p> 
-        <p class="zoomInfo">Scroll Y: <span id="scrollY">   </span></p>
+
+      <div>
+        <p class="scrollInfo">Scroll X: <span id="scrollX">  </span> </p> 
+        <p class="scrollInfo">Scroll Y: <span id="scrollY">   </span></p>
       </div>
-      
+
+      <div class="scrollTest" id="scrollTest" >        
+        <div id="scrollContent">
+          <p>ini..</p>
+          <br><br><br><br><br><br><br><br><br><br>
+          <p>mid..</p>
+          <br><br><br><br><br><br><br><br><br><br>
+          <p>fin..</p>
+        </div>
+      </div>
+
     </div>
+
   </div>
   <div class="rightcolumn">
     <div class="card">
