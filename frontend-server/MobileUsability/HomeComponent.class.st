@@ -1,3 +1,31 @@
+"
+""Para iniciar la pagina.""
+WAAdmin register: HomeComponent  asApplicationAt:'logsviewer' .
+
+--------------------------------------------
+""Configuracion de TeaPot""
+|server|
+
+server := Teapot configure: {(#debugMode -> true)}.
+server
+    GET: '/welcome/<nombre>' -> [:req | 'Hello World!', (req at: #nombre)];
+	 GET: '/bye' -> 'bye bye World!';
+
+	
+POST: '/registermc' -> [:request | 
+""	NeoJSONWriter toStringPretty: request contest.""
+LogRegister soleInstance addLog: (NeoJSONReader fromString: request contents ) .
+	
+		TeaResponse ok
+						headerName: 'Access-Control-Allow-Origin' value: '*';
+						yourself
+];
+	 start
+	
+	
+
+
+"
 Class {
 	#name : #HomeComponent,
 	#superclass : #WAComponent,
