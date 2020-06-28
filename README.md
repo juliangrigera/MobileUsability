@@ -17,3 +17,17 @@ Luego de haber logrado detectar esos patrones automáticamente, lo que hacemos e
 Link de la página de prueba: 
 
 https://htmlpreview.github.io/?https://github.com/juliangrigera/MobileUsability/blob/master/pagina.html
+
+--------------------------------------------------------------------------------------------------
+## Intalación en Pharo
+En un [Pharo 8.0](https://pharo.org/download) , ejecutá este codigo para instalar el paquete `MobileUsability`:
+
+``` smalltalk
+Metacello new
+	baseline: 'MobileUsability';
+	repository: 'github://juliangrigera/MobileUsability';
+	load.
+```
+
+  
+  
