@@ -9,10 +9,12 @@ BaselineOfMobileUsability >> baseline: arg1 [
 	<baseline>
 	arg1
 		for: #'pharo8.x'
-		do: [ arg1
+		do: [ self seaside: arg1.
+			arg1
 				blessing: #baseline;
 				repository: 'https://github.com/juliangrigera/MobileUsability.git';
-				package: 'MobileUsability-ui' with: [ arg1 requires: #('Seaside3') ];
+				package: 'MobileUsability-ui'
+					with: [ arg1 requires: #('Seaside3') ];
 				package: 'MobileUsability' ]
 ]
 
