@@ -5,12 +5,24 @@ Class {
 }
 
 { #category : #baselines }
-BaselineOfMobileUsability >> baseline: spec [
+BaselineOfMobileUsability >> baseline: arg1 [
 	<baseline>
-	spec
+	arg1
 		for: #'pharo8.x'
-		do: [spec blessing: #baseline. 
-			spec
-				repository: 'https://github.com/juliangrigera/MobileUsability.git'.
-			spec package: 'MobileUsability' ]
+		do: [ arg1
+				blessing: #baseline;
+				repository: 'https://github.com/juliangrigera/MobileUsability.git';
+				package: 'MobileUsability-ui' with: [ arg1 requires: #('Seaside3') ];
+				package: 'MobileUsability' ]
+]
+
+{ #category : #baseline }
+BaselineOfMobileUsability >> seaside: arg1 [
+	arg1
+		baseline: 'Seaside3'
+		with: [ | tmp2 |
+			tmp2 := arg1.
+			tmp2
+				loads: #('default');
+				repository: 'github://SeasideSt/Seaside:master/repository' ]
 ]
