@@ -42,7 +42,7 @@ function pointermove_handler(ev) {
    if (prevDiff > 0) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
-      elementsInPinch();
+       elementsInPinch();
        zoomInfo.style.background  = "pink";
      }
      if (curDiff < prevDiff) {
@@ -98,11 +98,13 @@ function elementsInPinch(){
  
   todos = document.getElementsByTagName("*");
   let htmlElements = new Array();
-  console.log("Los elementos son: ");
+ 
+  const serializer = new XMLSerializer();
+   xmlString = serializer.serializeToString
 
   for (var i=0, max=todos.length; i < max; i++) {
       if( insidePinch(evCache[0].clientX, evCache[1].clientX, evCache[0].clientY, evCache[1].clientY, todos[i].getBoundingClientRect()) ){
-          console.log(todos[i]);
+        console.log(createXPathFromElement(todos[i]));
 
     
           todos[i].classList.add("boxShadowZoomOut");
@@ -163,6 +165,22 @@ return false
   };
 
 }  
+function logEventPharo (center_x, center_y) {
+  var http = new XMLHttpRequest ();
+  var url = "http://localhost:1701/prueba";
+
+
+  http.open("POST", url, true);
+
+
+  http.onreadystatechange = function() {
+      if(http.readyState == 4 && http.status == 200) { 
+      //aqui obtienes la respuesta de tu peticion
+      alert(http.responseText);
+      }
+  }
+  http.send(JSON.stringify({x:center_x,y:center_y}));
+}
 
   var zoomInfo=document.getElementById("target");
   window.onpointerdown = pointerdown_handler;
@@ -179,3 +197,36 @@ return false
   removeStyleElementsInRadioPrevious();
 });
  
+
+function createXPathFromElement(elm) { 
+  var allNodes = document.getElementsByTagName('*'); 
+  for (var segs = []; elm && elm.nodeType == 1; elm = elm.parentNode) 
+  { 
+      if (elm.hasAttribute('id')) { 
+              var uniqueIdCount = 0; 
+              for (var n=0;n < allNodes.length;n++) { 
+                  if (allNodes[n].hasAttribute('id') && allNodes[n].id == elm.id) uniqueIdCount++; 
+                  if (uniqueIdCount > 1) break; 
+              }; 
+              if ( uniqueIdCount == 1) { 
+                  segs.unshift('id("' + elm.getAttribute('id') + '")'); 
+                  return segs.join('/'); 
+              } else { 
+                  segs.unshift(elm.localName.toLowerCase() + '[@id="' + elm.getAttribute('id') + '"]'); 
+              } 
+      } else if (elm.hasAttribute('class')) { 
+          segs.unshift(elm.localName.toLowerCase() + '[@class="' + elm.getAttribute('class') + '"]'); 
+      } else { 
+          for (i = 1, sib = elm.previousSibling; sib; sib = sib.previousSibling) { 
+              if (sib.localName == elm.localName)  i++; }; 
+              segs.unshift(elm.localName.toLowerCase() + '[' + i + ']'); 
+      }; 
+  }; 
+  return segs.length ? '/' + segs.join('/') : null; 
+}; 
+
+function lookupElementByXPath(path) { 
+  var evaluator = new XPathEvaluator(); 
+  var result = evaluator.evaluate(path, document.documentElement, null,XPathResult.FIRST_ORDERED_NODE_TYPE, null); 
+  return  result.singleNodeValue; 
+} 
