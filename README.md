@@ -29,5 +29,9 @@ Metacello new
 	load.
 ```
 
-  
+--------------------------------------------------------------------------------------------------
+
+## Links a páginas no responsive
+
+https://blog.rankingbyseo.com/bad-websites/
   

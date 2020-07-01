@@ -2,7 +2,15 @@
 // Global vars to cache event state
 var evCache = new Array();
 var prevDiff = -1;
+var myVar;
 
+function pinchReport(zeroX, oneX, zeroY, oneY) {
+  myVar = setTimeout(function(){elementsInPinch(zeroX, oneX, zeroY, oneY)}, 1000);
+}
+
+function stopPinchReport() {
+  clearTimeout(myVar);
+}
 
 
 function pointerdown_handler(ev) {
@@ -42,12 +50,14 @@ function pointermove_handler(ev) {
    if (prevDiff > 0) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
-       elementsInPinch();
+       stopPinchReport();
+       pinchReport(evCache[0].clientX, evCache[1].clientX, evCache[0].clientY, evCache[1].clientY);
        zoomInfo.style.background  = "pink";
      }
      if (curDiff < prevDiff) {
        // The distance between the two pointers has decreased
-       elementsInPinch();
+       stopPinchReport();
+       pinchReport(evCache[0].clientX, evCache[1].clientX, evCache[0].clientY, evCache[1].clientY);
        zoomInfo.style.background  = "lightblue";
      }
    }
@@ -94,17 +104,19 @@ function remove_event(ev) {
  }
 }
 
-function elementsInPinch(){
+function elementsInPinch(zeroX, zeroY, oneX, oneY){
  
   todos = document.getElementsByTagName("*");
   let htmlElements = new Array();
  
-  const serializer = new XMLSerializer();
-   xmlString = serializer.serializeToString
-
+ 
   for (var i=0, max=todos.length; i < max; i++) {
-      if( insidePinch(evCache[0].clientX, evCache[1].clientX, evCache[0].clientY, evCache[1].clientY, todos[i].getBoundingClientRect()) ){
+      if( insidePinch(zeroX, oneX, zeroY, oneY, todos[i].getBoundingClientRect()) ){
+        
         console.log(createXPathFromElement(todos[i]));
+        console.log("Font size: " + window.getComputedStyle(todos[i]).fontSize );
+
+
 
     
           todos[i].classList.add("boxShadowZoomOut");
