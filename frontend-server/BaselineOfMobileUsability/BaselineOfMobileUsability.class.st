@@ -5,17 +5,17 @@ Class {
 }
 
 { #category : #baselines }
-BaselineOfMobileUsability >> baseline: arg1 [
+BaselineOfMobileUsability >> baseline: spec [
 	<baseline>
-	arg1
+	spec
 		for: #'pharo8.x'
-		do: [ self bootstrap: arg1.
-			arg1
+		do: [ self bootstrap: spec.
+			spec
 				blessing: #baseline;
 				repository: 'https://github.com/juliangrigera/MobileUsability.git';
+				package: 'MobileUsability';
 				package: 'MobileUsability-ui'
-					with: [ arg1 requires: #('Bootstrap4') ];
-				package: 'MobileUsability' ]
+					with: [ spec requires: #('Bootstrap4') ] ]
 ]
 
 { #category : #baseline }
