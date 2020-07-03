@@ -13,8 +13,7 @@ BaselineOfMobileUsability >> baseline: spec [
 			spec
 				blessing: #baseline;
 				repository: 'https://github.com/juliangrigera/MobileUsability.git';
-				package: 'MobileUsability';
-				package: 'MobileUsability-ui'
+				package: 'MobileUsability'
 					with: [ spec requires: #('Bootstrap4') ] ]
 ]
 
