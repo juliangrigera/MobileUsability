@@ -115,15 +115,15 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
         
         console.log(createXPathFromElement(todos[i]));
         console.log("Font size: " + window.getComputedStyle(todos[i]).fontSize );
-
+        elemento = {FontSize: window.getComputedStyle(todos[i]).fontSize, XPath: createXPathFromElement(todos[i]) };
 
 
     
           todos[i].classList.add("boxShadowZoomOut");
-           htmlElements.push( todos[i] );
+           htmlElements.push(elemento);
       }
   }
-  return htmlElements;
+  logEventPharo(JSON.stringify(htmlElements));
 }
 
 function insidePinch(x1, x2, y1, y2, elemRect){
@@ -177,7 +177,7 @@ return false
   };
 
 }  
-function logEventPharo (center_x, center_y) {
+function logEventPharo (jsonElements) {
   var http = new XMLHttpRequest ();
   var url = "http://localhost:1701/prueba";
 
@@ -191,7 +191,7 @@ function logEventPharo (center_x, center_y) {
       alert(http.responseText);
       }
   }
-  http.send(JSON.stringify({x:center_x,y:center_y}));
+  http.send(jsonElements);
 }
 
   var zoomInfo=document.getElementById("target");
