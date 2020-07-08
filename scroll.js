@@ -1,6 +1,3 @@
- 
-  var scrollTimerEventId;
-  var scrollPoints;
 
   class ScrollPoints
   {  
@@ -8,9 +5,29 @@
     {
       this.pointX=pointX;
       this.pointY=pointY;
-      //time  
     }
   }
+
+  class ScrollEventInfo
+  {//parametros por defecto x = 0, y = 0
+    constructor( initialPositionScroll = new ScrollPoints(0,0) )
+    {
+      this.timestamp = Date.now();
+      this.arrayScrollPoints = new Array( initialPositionScroll );
+    } 
+
+    addScrollPoint(scrollPoint)
+    {
+      this.arrayScrollPoints.push(scrollPoint);
+    }
+  }
+
+
+  var scrollTimerEventId;
+  var resetValuePoint;
+  //var arrayScrollPoints = new Array( new ScrollPoints(0,0) );
+  var scrollEventInfo = new ScrollEventInfo();
+
 
   document.getElementById("scrollTest").addEventListener("scroll",event => {
   
@@ -21,7 +38,9 @@
     document.getElementById ("scrollX").innerHTML =  x + "px";
     document.getElementById ("scrollY").innerHTML =  y + "px";
 
-    scrollPoints = new ScrollPoints(x,y);
+    // arrayScrollPoints.push(new ScrollPoints(x,y));
+    resetValuePoint = new ScrollPoints(x,y);
+    scrollEventInfo.addScrollPoint( new ScrollPoints(x,y) );
 
     setTimerScrollEvent();
 
@@ -30,19 +49,22 @@
   function setTimerScrollEvent()
   { //carga el nuevo evento y resetea el timer
     clearTimeout(scrollTimerEventId);
+   
     scrollTimerEventId = window.setTimeout( sendDataScrollEvent2, 1500 );
   }
 
   function sendDataScrollEvent2()
   {
     console.log(">>>>>>>>>>> scroll Event <<<<<<<<<<<");
-    console.log("el objeto enviado es: ");
-    console.log( JSON.stringify(scrollPoints) );
+    console.log( JSON.stringify(scrollEventInfo) );
+    scrollEventInfo = new ScrollEventInfo(resetValuePoint);
   }
 
   function sendDataScrollEvent()
   { 
-    const data = scrollPoints;
+    const data = scrollEventInfo;
+    //reset initial data 
+    scrollEventInfo = new ScrollEventInfo(resetValuePoint);
 
     fetch('http://localhost:8000/ejemplo.php', {
       method: 'POST', // or 'PUT'
@@ -58,6 +80,7 @@
      .catch((error) => {
        console.error('Error:', error);
      });
+
   }
  
   
