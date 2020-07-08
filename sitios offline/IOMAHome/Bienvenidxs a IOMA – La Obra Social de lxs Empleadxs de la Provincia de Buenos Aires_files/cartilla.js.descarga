@@ -1,0 +1,707 @@
+﻿$apiUri = 'https://api.ioma.gba.gob.ar';
+$url = '/api-cartilla/v1/clinicas/domicilios';
+$tipoBusqueda = "1";
+$apiCartillaToken = jQuery("#apiKeyCartilla").val();
+$idProfesionesConEspecialidad = ["5", "6", "7", "8"];
+$profesionesCargadoOK = false;
+
+function inicializarSelect2() {
+    jQuery("#profesionSelect").select2({
+        theme: "bootstrap",
+        width: '100%',
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            }
+        }
+    });
+
+    jQuery("#especialidadSelect").select2({
+        theme: "bootstrap",
+        width: '100%',
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            }
+        }
+    });
+
+    jQuery("#partidoSelect").select2({
+        theme: "bootstrap",
+        width: '100%',
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            }
+        }
+    });
+
+    jQuery("#localidadSelect").select2({
+        theme: "bootstrap",
+        width: '100%',
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            }
+        }
+    });
+}
+
+jQuery("input[name=optradio]").on("change", function() {
+    limpiarCamposDeBusqueda();
+    $tipoBusqueda = jQuery('input[name=optradio]:checked').val();
+
+    switch ($tipoBusqueda) {
+        case "1":
+            $url = '/api-cartilla/v1/clinicas/domicilios';
+            jQuery("#categoriaOcultar").hide("slow");
+            jQuery("#profesionOcultar").hide("slow");
+            jQuery("#especialidadSelect").empty();
+
+            cargarEspecialidadesClinicas();
+            jQuery("#especialidadOcultar").show("slow");
+            break;
+        case "2":
+            $url = '/api-cartilla/v1/clinicasaltacomplejidad/domicilios';
+            jQuery("#categoriaOcultar").hide("slow");
+            jQuery("#profesionOcultar").hide("slow");
+            jQuery("#especialidadSelect").empty();
+            cargarEspecialidadesClinicasAltaComplejidad();
+            jQuery("#especialidadOcultar").show("slow");
+            break;
+        case "3":
+            $url = "/api-cartilla/v1/farmacias/domicilios";
+            jQuery("#categoriaOcultar").hide("slow");
+            jQuery("#profesionOcultar").hide("slow");
+            jQuery("#especialidadSelect").empty();
+            jQuery("#especialidadOcultar").hide('slow');
+            break;
+        case "4":
+            $url = '/api-cartilla/v1/profesionales/domicilios';
+            if (!$profesionesCargadoOK) {
+                cargarSelectProfesiones();
+                $profesionesCargadoOK = true;
+            }
+            jQuery("#especialidadOcultar").hide("slow");
+            jQuery("#profesionSelect").select2("val", "0");
+            jQuery("#profesionOcultar").show("slow");
+            jQuery("#categoriaOcultar").show("slow");
+            jQuery("#nombreOcultar").show("slow");
+            break;
+    }
+});
+
+function limpiarCamposDeBusqueda() {
+    jQuery("#profesionSelect").select2("val", "0");
+    jQuery("#partidoSelect").select2("val", "0");
+    jQuery("#partidoError").hide();
+    jQuery("#localidadSelect").empty();
+    jQuery("#localidadOcultar").hide("slow");
+    jQuery("#especialidadSelect").empty();
+    jQuery("#catLibre").prop('checked', false);
+    jQuery("#catA").prop('checked', false);
+    jQuery("#catB").prop('checked', false);
+    jQuery("#catC").prop('checked', false);
+}
+
+$contadorToken = 0;
+
+function refreshToken() {
+    jQuery.ajax({
+        type: "POST",
+        url: $apiUri + '/api-cartilla/v1/users/refresh',
+        dataType: "json",
+        data: {
+            "api_key": $apiCartillaToken
+        },
+        success: function(respuesta) {
+            $contadorToken++;
+            $apiCartillaToken = respuesta.api_key;
+        },
+        error: function(respuesta) {
+            //console.log("Â°Â°Â°Â°Â° Error al generar api token! Â°Â°Â°Â°Â°");
+            //console.log("Â°Â°Â°Â°Â° Status Text: " + respuesta.statusText + " Â°Â°Â°Â°Â°");
+        }
+    });
+}
+
+function cargarEspecialidadesClinicas() {
+    jQuery.ajax({
+        url: $apiUri + '/api-cartilla/v1/especialidadesclinicas?sort=descripcion asc',
+        headers: { "api_key": $apiCartillaToken },
+        success: function(respuesta) {
+            var selectEspecialidad = jQuery("#especialidadSelect");
+            selectEspecialidad.append(new Option("Seleccioná una especialidad...", "0"));
+
+            jQuery.each(respuesta.rows, function(index, elemento) {
+                selectEspecialidad.append(
+                    new Option(elemento.descripcion.toUpperCase(), elemento.id)
+                );
+            });
+        },
+        error: function() {
+            //console.log("No se ha podido obtener la información.");
+        }
+    });
+}
+
+function cargarEspecialidadesClinicasAltaComplejidad() {
+    jQuery.ajax({
+        url: $apiUri + '/api-cartilla/v1/especialidadesaltacomplejidad?sort=descripcion asc',
+        headers: { "api_key": $apiCartillaToken },
+        success: function(respuesta) {
+            var selectEspecialidad = jQuery("#especialidadSelect");
+            selectEspecialidad.append(new Option("Seleccioná una especialidad...", "0"));
+
+            jQuery.each(respuesta.rows, function(index, elemento) {
+                selectEspecialidad.append(
+                    new Option(elemento.descripcion.toUpperCase(), elemento.id)
+                );
+            });
+        },
+        error: function() {
+            //console.log("No se ha podido obtener la información.");
+        }
+    });
+}
+
+function cargarSelectProfesiones() {
+    jQuery.ajax({
+        url: $apiUri + '/api-cartilla/v1/profesiones?sort=descripcion asc',
+        headers: { "api_key": $apiCartillaToken },
+        success: function(respuesta) {
+            var selectProfesiones = jQuery("#profesionSelect");
+            selectProfesiones.append(new Option("Seleccioná profesión...", "0"));
+
+            jQuery.each(respuesta.rows, function(index, elemento) {
+                selectProfesiones.append(
+                    new Option(elemento.descripcion.toUpperCase(), elemento.id)
+                );
+            });
+        },
+        error: function() {
+            //console.log("No se ha podido obtener la información.");
+        }
+    });
+}
+
+//Cargar las especialidades de la profesión seleccionada.
+jQuery("#profesionSelect").on("change", function() {
+    jQuery("#especialidadSelect").empty();
+    var id = jQuery("#profesionSelect").val();
+
+    if (id != 0 && id != null) {
+        if (tieneEspecialidad(id)) {
+            cargarSelectEspecialidadesPorProfesion(id);
+        } else {
+            jQuery("#especialidadOcultar").hide('slow');
+            //getProfesionalesByProfesion(id);
+        }
+    }
+});
+
+
+function tieneEspecialidad(idProfesion) {
+    return (jQuery.inArray(idProfesion.toString(), $idProfesionesConEspecialidad) !== -1) ? true : false;
+}
+
+function cargarSelectEspecialidadesPorProfesion(idProfesion) {
+    jQuery.ajax({
+        url: $apiUri + '/api-cartilla/v1/especialidades?filter=id_profesion eq ' + idProfesion.toString() + '&sort=descripcion asc',
+        headers: { "api_key": $apiCartillaToken },
+        success: function(respuesta) {
+            if (respuesta.rows.length > 1) {
+                var selectEspecialidad = jQuery("#especialidadSelect");
+                selectEspecialidad.append(new Option("Seleccioná especialidad...", "0"));
+
+                jQuery.each(respuesta.rows, function(index, elemento) {
+                    selectEspecialidad.append(
+                        new Option(elemento.descripcion.toUpperCase(), elemento.id)
+                    );
+                });
+
+                //jQuery("#especialidadSelect").prop('disabled', false);
+                jQuery("#especialidadOcultar").show("slow");
+            } else {
+                //jQuery("#especialidadSelect").prop('disabled', 'disabled');
+                jQuery("#especialidadOcultar").hide("slow");
+            }
+        },
+        error: function() {
+            //console.log("No se ha podido obtener la información.");
+        }
+    });
+}
+
+
+//----------------------------------------------------------------------------------//
+
+// Búsqueda por profesión y especialidad.
+// jQuery("#especialidadSelect").on("change", function() {
+//     var idProfesion = jQuery("#profesionSelect").val();
+//     var idEspecialidad = jQuery("#especialidadSelect").val();
+
+//     getProfesionalesByProfesionAndEspecialidad(idProfesion, idEspecialidad);
+// });
+
+function getProfesionalesByProfesionAndEspecialidad(idProfesion, idEspecialidad) {
+    jQuery.ajax({
+        url: $apiUri + '/api-cartilla/v1/profesionales/domicilios?filter=id_profesion eq ' + idProfesion.toString() + ',id_especialidad eq ' + idEspecialidad.toString(),
+        headers: { "api_key": $apiCartillaToken },
+        success: function(respuesta) {
+            if (respuesta.rows.length > 1) {
+                console.groupCollapsed("%c Se trajeron %i profesionales.", "background: #222; color: #bada55", respuesta.rows.length);
+                console.dir(respuesta.rows);
+                console.groupEnd();
+            } else {
+                console.log("%c La búsqueda no dió resultado.", "background: #222; color: yellow");
+            }
+
+            initTablePrestadores(respuesta.rows);
+            jQuery("html, body").animate({ scrollTop: jQuery('#tablaPrestadoresContent').offset().top }, 1500);
+        },
+        error: function() {
+            console.log("No se ha podido obtener la información.");
+        }
+    });
+}
+
+function getProfesionalesByProfesion(idProfesion) {
+    jQuery.ajax({
+        url: $apiUri + '/api-cartilla/v1/profesionales/domicilios?filter=id_profesion eq ' + idProfesion.toString(),
+        headers: { "api_key": $apiCartillaToken },
+        success: function(respuesta) {
+            if (respuesta.rows.length > 1) {
+                console.groupCollapsed("%c Se trajeron %i profesionales.", "background: #222; color: #bada55", respuesta.rows.length);
+                console.dir(respuesta.rows);
+                console.groupEnd();
+            } else {
+                console.log("%c La búsqueda no dió resultado.", "background: #222; color: yellow");
+            }
+
+            initTablePrestadores(respuesta.rows);
+            jQuery("html, body").animate({ scrollTop: jQuery('#tablaPrestadoresContent').offset().top }, 1500);
+        },
+        error: function() {
+            console.log("No se ha podido obtener la información.");
+        }
+    });
+}
+
+function getPartidos() {
+    jQuery.ajax({
+        url: $apiUri + '/api-cartilla/v1/partidos?sort=descripcion asc',
+        headers: { "api_key": $apiCartillaToken },
+        success: function(respuesta) {
+            var selectPartido = jQuery("#partidoSelect");
+            selectPartido.append(new Option("Seleccioná el partido...", "0"));
+
+            jQuery.each(respuesta.rows, function(index, elemento) {
+                selectPartido.append(
+                    new Option(elemento.descripcion.toUpperCase(), elemento.id)
+                );
+            });
+        },
+        error: function() {
+            //console.log("No se ha podido obtener la información.");
+        }
+    });
+}
+
+jQuery("#partidoSelect").on('change', function() {
+    var id = jQuery("#partidoSelect").val();
+    if (id != 0 && id != null && id != 2) {
+        getLocalidadesByPartido(id);
+        jQuery("#localidadOcultar").show("slow");
+    }else{
+	jQuery("#localidadSelect").empty();
+	jQuery("#localidadOcultar").hide("slow");
+}
+});
+
+function getLocalidadesByPartido(idPartido) {
+    jQuery.ajax({
+        url: $apiUri + '/api-cartilla/v1/localidades?filter=id_partido eq ' + idPartido.toString() + '&sort=descripcion asc',
+        headers: { "api_key": $apiCartillaToken },
+        success: function(respuesta) {
+            var selectLocalidad = jQuery("#localidadSelect");
+            selectLocalidad.empty();
+            selectLocalidad.append(new Option("Seleccioná la localidad...", "0"));
+
+            jQuery.each(respuesta.rows, function(index, elemento) {
+                selectLocalidad.append(
+                    new Option(elemento.descripcion.toUpperCase(), elemento.id)
+                );
+            });
+        },
+        error: function() {
+            //console.log("No se ha podido obtener la información.");
+        }
+    });
+}
+
+jQuery("#buscarProfesionalesButton").on("click", function() {
+    var idPartido = jQuery("#partidoSelect").val();
+    if (idPartido != 0 && idPartido != null) {
+
+        $parametrosBusqueda = "?";
+        $parametrosBusqueda = $parametrosBusqueda.concat("domicilios=id_partido eq ", idPartido.toString());
+
+        var idLocalidad = jQuery("#localidadSelect").val();
+        if (idLocalidad != 0 && idLocalidad != null) {
+            $parametrosBusqueda = $parametrosBusqueda.concat(",domicilios=id_localidad eq ", idLocalidad.toString());
+        }
+
+        var idProfesion = jQuery("#profesionSelect").val();
+        if (idProfesion != 0 && idProfesion != null && $tipoBusqueda == 4) {
+            $parametrosBusqueda = $parametrosBusqueda.concat("&filter=id_profesion eq ", idProfesion.toString());
+        }
+
+        var idEspecialidad = jQuery("#especialidadSelect").val();
+        if (idEspecialidad != 0 && idEspecialidad != null) {
+            switch ($tipoBusqueda) {
+                case "1":
+                    $parametrosBusqueda = $parametrosBusqueda.concat("&filter=id_especialidad_clinica eq ", idEspecialidad.toString());
+                    break;
+                case "2":
+                    $parametrosBusqueda = $parametrosBusqueda.concat("&filter=id_especialidad_clinica_alta_complejidad eq ", idEspecialidad.toString());
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    $parametrosBusqueda = $parametrosBusqueda.concat(",id_especialidad eq ", idEspecialidad.toString());
+                    break;
+            }
+        }
+
+        // var nombreProfesional = jQuery("#nombreProfesional").val();
+        // if (nombreProfesional != "") {
+        //     $parametrosBusqueda = $parametrosBusqueda.concat(",nombre like %", nombreProfesional + "%");
+        // }
+
+        // var apellidoProfesional = jQuery("#apellidoProfesional").val();
+        // if (apellidoProfesional != "") {
+        //     $parametrosBusqueda = $parametrosBusqueda.concat(",apellido like %", apellidoProfesional + "%");
+        // }
+
+        var val = [];
+        jQuery(':checkbox:checked').each(function(i) {
+            val[i] = jQuery(this).val();
+        });
+
+        if (val != null && val.length > 0) {
+            for (var i = 0; i < val.length; i++) {
+                if (i === 0) {
+                    $parametrosBusqueda = $parametrosBusqueda.concat("&categoria=id in ", val[i].toString());
+                } else {
+                    $parametrosBusqueda = $parametrosBusqueda.concat(" ", val[i].toString());
+                }
+            }
+        }
+
+        //alert($apiUri + $url + $parametrosBusqueda);
+
+        jQuery.ajax({
+            url: $apiUri + $url + $parametrosBusqueda,
+            dataType: "json",
+            headers: { "api_key": $apiCartillaToken },
+            beforeSend: function() {
+                jQuery("#buscarProfesionalesButton").attr('disabled', true);
+            },
+            success: function(respuesta) {
+                // if (respuesta.rows.length > 1) {
+                //     console.groupCollapsed("%c La búsqueda dió %i resultados.", "background: #222; color: #bada55", respuesta.rows.length);
+                //     console.dir(respuesta.rows);
+                //     console.groupEnd();
+                // } else {
+                //     console.log("%c La búsqueda no dió resultado.", "background: #222; color: yellow");
+                // }
+
+                initTablePrestadores(respuesta.rows);
+                jQuery("html, body").animate({ scrollTop: jQuery('#tablaPrestadoresContent').offset().top }, 1500);
+            },
+            error: function(ex) {
+                console.log("No se ha podido obtener la información.");
+            },
+            complete: function() {
+                jQuery("#buscarProfesionalesButton").attr('disabled', false);
+            }
+        });
+    } else {
+        jQuery("#partidoError").show('slow');
+    }
+
+    jQuery("#buscarProfesionalesButton").blur();
+});
+
+jQuery("#partidoSelect").on("change", function() {
+    var idPartido = jQuery("#partidoSelect").val();
+    if (idPartido != 0 && idPartido != null) {
+        jQuery("#partidoError").hide("slow");
+    } else {
+        jQuery("#partidoError").show("slow");
+    }
+})
+
+function initTablePrestadores(data) {
+    $tablaPrestadores = jQuery('#tablaPrestadores').DataTable({
+        destroy: true,
+        data: data,
+	scrollX: "200px",
+        columnDefs: [
+            { "width": "20%", "targets": 0 }
+        ],
+        columns: [{
+                "title": "Nombre",
+                "data": "nombreCompleto",
+                "render": function(data, type, full, meta) {
+                    if ($tipoBusqueda == 4) {
+                        return full.apellido.toUpperCase() + " " + full.nombre.toUpperCase();
+                    } else {
+                        return full.nombre.toUpperCase();
+                    }
+
+                }
+            },
+            {
+                "title": "Especialidad",
+                "data": "especialidad",
+                "render": function(data, type, full, meta) {
+                    if (full.especialidad != null) {
+                        return full.especialidad.descripcion.toUpperCase();
+                    } else {
+                        return "";
+                    }
+                }
+            },
+            // { "title": "Profesión", "data": "profesion.descripcion" },
+            // { "title": "Especialidad", "data": "especialidad.descripcion" },
+            {
+                "title": "Dirección",
+                "data": "direccion",
+                "render": function(data, type, full, meta) {
+                    return full.domicilios[0].calle.toUpperCase() + " " +
+                        full.domicilios[0].altura.toUpperCase();
+                }
+            },
+            {
+                "title": "Teléfonos",
+                "data": "telefonos",
+		"bSortable": false,
+                "render": function(data, type, full, meta) {
+                    var text ='';
+                    if(full.domicilios[0].telefonos[0] != null){
+                        jQuery.each(full.domicilios[0].telefonos, function(x, val) {
+                            var interno = "";
+                            if (val != null) {
+                                if (val.interno != null) {
+                                    interno = "INT. " + val.interno;
+                                }
+                            }
+                            if (x > 0) {
+                                text += '/ ';
+                            }
+                            text += '<span>(' + val.codigo_area.toString() + ') ' + val.numero.toString() + ' ' + interno + '</span> ';
+                        })
+                    } else {
+                        text += 'No registra.';
+                    }
+                    
+                    return text;
+
+                    // var interno = "";
+                    // if (full.domicilios[0].telefonos[0] != null) {
+                    //     if (full.domicilios[0].telefonos[0].interno != null) {
+                    //         interno = "INT. " + full.domicilios[0].telefonos[0].interno;
+                    //     }
+
+                    //     return "(" + full.domicilios[0].telefonos[0].codigo_area + ") " +
+                    //         full.domicilios[0].telefonos[0].numero + " " +
+                    //         interno;
+                    // }
+
+                    // return "";
+                }            
+	},
+            {
+                "title": "Localidad",
+                "data": "localidad",
+                "render": function(data, type, full, meta) {
+                    if (full.domicilios[0].localidad.descripcion != null) {
+                        return full.domicilios[0].localidad.descripcion.toUpperCase();
+                    }
+
+                    return "";
+                }
+            },
+            {
+                "title": "Categoría",
+                "data": "categoria",
+                "render": function(data, type, full, meta) {
+                    if (full.categoria != null) {
+                        return full.categoria.descripcion.toUpperCase();
+                    } else {
+                        return "";
+                    }
+                }
+            },
+	    {
+                "title": "Otros domicilios",
+                "data": "detalle",
+                "width": "15%",
+                "bSortable": false,
+                "render": function(data, type, full, meta) {
+                    if (full.domicilios.length > 1) {
+                        return '<button class="btn btn-sm btn-default rowDetail" style="border: 1px solid #aaa;" type="button"> <i class="fas fa-eye"></i> </button>';
+                    } else {
+                        return '<span class="badge badge-secondary">No registra</span>';
+			//return '<button class="btn btn-sm btn-default" disabled style="border: 1px solid #aaa;" type="button"> <i class="fas fa-ban"></i> </button>';
+                    }
+
+                }
+            }
+        ],
+        pagingType: "simple_numbers",
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando del _START_ al _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando del 0 al 0 de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+    });
+
+    /* Formatting function for row details - modify as you need */
+    function format(d) {
+        // `d` is the original data object for the row
+        if (d.domicilios.length > 1) {
+            var i;
+            var text = "<h5>Otros domicilios de atención: </h5>";
+
+            //DOMICILIOS:
+            for (i = 1; i < d.domicilios.length; i++) {
+                text += '<div class="card" style="margin-bottom: 5px;">' +
+                    '<div class="card-body">' +
+                    '<h5 class="card-title"><i class="far fa-hospital"></i> ' + d.domicilios[i].calle + " " + d.domicilios[i].altura + ', ' + d.domicilios[i].localidad.descripcion + '</h5>' +
+                    '<p class="card-text" style="font-size: 1rem;"><strong>Teléfonos: </strong>';
+
+                //TELÉFONOS:
+                var cantTelefonos = d.domicilios[i].telefonos.length;
+                if (cantTelefonos > 0) {
+                    jQuery.each(d.domicilios[i].telefonos, function(x, val) {
+                        var interno = "";
+                        if (val != null) {
+                            if (val.interno != null) {
+                                interno = "INT. " + val.interno;
+                            }
+                        }
+                        if (x > 0) {
+                            text += '/ ';
+                        }
+                        text += '<span>(' + val.codigo_area.toString() + ') ' + val.numero.toString() + ' ' + interno + '</span> ';
+                    });
+                } else {
+                    text += 'No registra.';
+                }
+                text += '</p>' + '<p class="card-text" style="font-size: 1rem;"><strong>Horarios de atención: </strong>';
+
+                //HORARIOS DE ATENCIÓN:
+                var cantHorarios = d.domicilios[i].horarios_atencion;
+                if (cantHorarios > 0) {
+                    jQuery.each(d.domicilios[i].horarios_atencion, function(y, val) {
+                        var horarioDeTardeDesde = "";
+                        var horarioDeTardeHasta = "";
+                        if (val.desde_2 != "") {
+                            horarioDeTardeDesde = val.desde_2;
+                        }
+                        if (val.hasta_2 != "") {
+                            horarioDeTardeHasta = val.hasta_2;
+                        }
+                        if (y > 0) {
+                            text += '/ ';
+                        }
+                        text += '<span> Día: ' + val.dia + ' desde: ' + val.desde_1 + ' hasta: ' + val.hasta_1;
+                        if (horarioDeTardeDesde != "") {
+                            text += ' y desde: ' + horarioDeTardeDesde + ' hasta: ' + horarioDeTardeHasta;
+                        }
+                        text += '</span>';
+                    });
+                } else {
+                    text += 'No registra.';
+                }
+                text += '</p>' +
+                    // '<a href="#" class="btn btn-primary">Ver en el mapa</a>' +
+                    '</div>' +
+                    '</div>';
+
+                // text = '<div style="width:100%;">' +
+                //     '<h5 class="text-center" style="border: 1px dashed #ddd;">' + d.domicilios[i].localidad.descripcion + '</h5>' +
+                //     '<div class="row">' +
+                //     '<div class="col-2 offset-1">' +
+                //     '<img id="mapImg" style="width:100%; border: 1px dashed #ddd;" src="images/' + Math.floor((Math.random() * 24) + 1) + '.png"></img>' +
+                //     '<div class="linkMap"></div>' + //mal, poner un botón que ejecute la funcion y muestre el mapa
+                //     '</div>' +
+                //     '<p style="">Atiende en: </p>' +
+                //     '</div>' +
+                //     '</div>';
+
+                //obtenerCoordenadas(d.domicilios[i].calle, d.domicilios[i].altura, d.domicilios[i].localidad.descripcion);
+            }
+
+
+        } else {
+            text = '<div class="alert alert-warning" role="alert" style="font-size: 1rem; margin-bottom: 0px;">' +
+                'No hay detalles para mostrar.' +
+                '</div>';
+        }
+        return text;
+}
+
+    jQuery('#tablaPrestadores tbody').off();
+    //td.details-control si quiero que se abra al tocar el botón +.
+    //tr si quiero que al tocar la fila se abra.
+    // Add event listener for opening and closing details
+    jQuery('#tablaPrestadores tbody').on('click', 'button.rowDetail', function() {
+        var tr = jQuery(this).closest('tr');
+        var row = $tablaPrestadores.row(tr);
+
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+}

@@ -112,10 +112,9 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
  
   for (var i=0, max=todos.length; i < max; i++) {
       if( insidePinch(zeroX, oneX, zeroY, oneY, todos[i].getBoundingClientRect()) ){
-        
         console.log(createXPathFromElement(todos[i]));
         console.log("Font size: " + window.getComputedStyle(todos[i]).fontSize );
-        elemento = {FontSize: window.getComputedStyle(todos[i]).fontSize, XPath: createXPathFromElement(todos[i]) };
+        elemento = {eventType: 'zoomPinch', FontSize: window.getComputedStyle(todos[i]).fontSize, XPath: createXPathFromElement(todos[i]) };
 
 
     
@@ -127,44 +126,47 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
 }
 
 function insidePinch(x1, x2, y1, y2, elemRect){
-  if (x1 > x2){
-    aux = x1;
-    x1 = x2;
-    x2 = aux;
+if (Math.abs(x1 - x2) > Math.abs(y1 - y2)){
+//zoomPinch Horizontal
+
+//hago que x1 sea el dedo que está más a la izquierda, para facilitar comparaciones
+if (x1 > x2){
+  aux = x1;
+  x1 = x2;
+  x2 = aux;
+}
+
+if(elemRect.left >= x1 && elemRect.left <= x2 || elemRect.right >= x1 && elemRect.right <= x2 ){
+  if(elemRect.top <= y1 && elemRect.bottom >= y1 || elemRect.top <= y2 && elemRect.bottom >= y2){
+      return true;
   }
+return false;
+}
+else{
+  //zoomPinch Vertical
+
+  //hago que y1 sea el dedo que está más arriba, para facilitar comparaciones
 
   if (y1 > y2){
     aux = y1;
     y1 = y2;
     y2 = aux;
   }
-
-  if(elemRect.top >= y1 && elemRect.top <= y2){
-      return true;
-
+  if(elemRect.top >= y1 && elemRect.top <= y2 || elemRect.bottom >= y1 && elemRect.bottom <= y2 ){
+    if(elemRect.left <= x1 && elemRect.right >= x1 || elemRect.left <= x2 && elemRect.right >= x2){
+        return true;
+    }
+  return false;
   }
-
-  
-  if(elemRect.bottom >= y1 && elemRect.bottom <= y2){
-    return true;
-
 }
+}}
 
-if(elemRect.left >= x1 && elemRect.left <= x2){
-  return true;
-
-}
+    
 
 
-if(elemRect.right >= x1 && elemRect.right <= x2){
-return true;
-
-}
-
-return false
 
 
-}
+
 
  function removeStyleElementsInRadioPrevious(){
   //remover los elementos con boxShadow
