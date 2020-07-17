@@ -1,5 +1,5 @@
 Class {
-	#name : #ScrollLogs,
+	#name : #Scroll,
 	#superclass : #UsabilityLogs,
 	#instVars : [
 		'distance',

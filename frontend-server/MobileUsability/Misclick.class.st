@@ -1,5 +1,5 @@
 Class {
-	#name : #MissClickLogs,
+	#name : #Misclick,
 	#superclass : #UsabilityLogs,
 	#instVars : [
 		'cordX',
@@ -10,40 +10,39 @@ Class {
 }
 
 { #category : #'instance creation' }
-MissClickLogs class >> newWithCordX: aCordx cordY: aCordY elements: aCol [
-	^ self new
-		cordX: aCordx;
-		cordY: aCordY;
-		elements: aCol;
-		timestamp: DateAndTime now
+Misclick class >> newFromDictionary: aDictionary [
+^(self new) cordX: (aDictionary at:'x') ; cordY: (aDictionary at: 'y').
+ 
+ 
+ 
 ]
 
 { #category : #accessing }
-MissClickLogs >> cordX [
+Misclick >> cordX [
 	^ cordX
 ]
 
 { #category : #accessing }
-MissClickLogs >> cordX: anObject [
+Misclick >> cordX: anObject [
 	cordX := anObject
 ]
 
 { #category : #accessing }
-MissClickLogs >> cordY [
+Misclick >> cordY [
 	^ cordY
 ]
 
 { #category : #accessing }
-MissClickLogs >> cordY: anObject [
+Misclick >> cordY: anObject [
 	cordY := anObject
 ]
 
 { #category : #accessing }
-MissClickLogs >> elements [
+Misclick >> elements [
 	^ elements
 ]
 
 { #category : #accessing }
-MissClickLogs >> elements: anObject [
+Misclick >> elements: anObject [
 	elements := anObject
 ]

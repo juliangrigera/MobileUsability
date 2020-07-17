@@ -1,5 +1,5 @@
 Class {
-	#name : #ZoomLogs,
+	#name : #PinchZoom,
 	#superclass : #UsabilityLogs,
 	#instVars : [
 		'percentage',

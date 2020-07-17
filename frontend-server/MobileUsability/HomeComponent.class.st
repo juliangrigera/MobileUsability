@@ -35,65 +35,85 @@ Class {
 	#category : #'MobileUsability-ui'
 }
 
+{ #category : #'class initialization' }
+HomeComponent class >> initialize [
+	| app |
+	app := WAAdmin register: self asApplicationAt: 'logsviewer'.
+	app
+		addLibrary: JQDeploymentLibrary;
+		addLibrary: SBSDevelopmentLibrary
+]
+
 { #category : #initialization }
 HomeComponent >> initialize [
-super initialize.
+super initialize .
 	sistema := LogRegister soleInstance
 ]
 
 { #category : #rendering }
-HomeComponent >> renderBodyOn: aCanvas [
-	aCanvas heading
+HomeComponent >> renderBodyOn: html [
+	html navigationLink
+		url: 'https://github.com/astares/Seaside-Bootstrap4';
+		with: 'Bootstrap4 for Seaside'.
+	html jumbotron: [ html heading: 'Bootstrap4 for Seaside' ].
+	html heading
 		level: 2;
 		with: 'MissClick Logs!'.
-	self renderLogsOn: aCanvas.
+	self renderLogsOn: html
 ]
 
 { #category : #rendering }
-HomeComponent >> renderContentOn: aCanvas [
-	aCanvas heading: 'Logs Viewer'.
-	aCanvas horizontalRule.
-	self renderBodyOn: aCanvas.
-	aCanvas horizontalRule
+HomeComponent >> renderContentOn: html [
+	html heading: 'Logs Viewer'.
+	html horizontalRule.
+	self renderBodyOn: html.
+	html heading level2 with: 'Examples'.
+	html horizontalRule
 ]
 
 { #category : #rendering }
-HomeComponent >> renderJSONOn: aCanvas element: each [
-	aCanvas horizontalRule.
-	aCanvas text: (NeoJSONWriter
+HomeComponent >> renderJSONOn: html element: each [
+	html horizontalRule.
+	html text: (NeoJSONWriter
 		new;
 		toStringPretty: each).
-	aCanvas break.
+	html break.
 
-	aCanvas horizontalRule
+	html horizontalRule
 ]
 
 { #category : #rendering }
-HomeComponent >> renderLogOn: aCanvas element: each [
-	aCanvas horizontalRule.
-	aCanvas text: each timestamp.
-	aCanvas break.
-	aCanvas
+HomeComponent >> renderLogOn: html element: each [
+	html horizontalRule.
+	html text: each timestamp.
+	html break.
+	html
 		text: 'Coordenada X:  ';
 		space.
-	aCanvas text: each cordX.
-	aCanvas
+	html text: each cordX.
+	html
 		break;
 		text: 'Coordenada Y:  ';
 		space.
-	aCanvas text: each cordY.
-	aCanvas
+	html text: each cordY.
+	html
 		break;
 		text: 'Elementos:  ';
 		space.
-	aCanvas text: each elements.
-	aCanvas break.
-	aCanvas horizontalRule
+	html text: each elements.
+	html break.
+	html horizontalRule
 ]
 
 { #category : #rendering }
-HomeComponent >> renderLogsOn: aCanvas [
+HomeComponent >> renderLogsOn: html [
 	sistema logs
-		ifNil: [ aCanvas text: 'No hay logs.' ]
-		ifNotNil: [ sistema logs do: [ :ele | self renderJSONOn: aCanvas element: ele ] ]
+		ifNil: [ html text: 'No hay logs.' ]
+		ifNotNil: [ sistema logs do: [ :ele | self renderJSONOn: html element: ele ] ]
+]
+
+{ #category : #rendering }
+HomeComponent >> rendererClass [
+	^ SBSHtmlCanvas
+
 ]
