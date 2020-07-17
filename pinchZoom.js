@@ -122,7 +122,7 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
            htmlElements.push(elemento);
       }
   }
-  logEventPharo(JSON.stringify(htmlElements));
+  logEventPharoPinch(JSON.stringify(htmlElements));
 }
 
 function insidePinch(x1, x2, y1, y2, elemRect){
@@ -179,9 +179,9 @@ else{
   };
 
 }  
-function logEventPharo (jsonElements) {
+function logEventPharoPinch (jsonElements) {
   var http = new XMLHttpRequest ();
-  var url = "http://localhost:1701/prueba";
+  var url = "http://localhost:1701/register";
 
 
   http.open("POST", url, true);

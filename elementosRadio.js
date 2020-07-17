@@ -91,7 +91,7 @@ function printProperties( center_x, center_y, radio){
 
 function logEventPharo (center_x, center_y) {
     var http = new XMLHttpRequest ();
-    var url = "http://localhost:1701/prueba";
+    var url = "http://localhost:1701/register";
 
 
     http.open("POST", url, true);
@@ -103,7 +103,7 @@ function logEventPharo (center_x, center_y) {
         alert(http.responseText);
         }
     }
-    http.send(JSON.stringify({x:center_x,y:center_y}));
+   http.send(JSON.stringify({class:'MissClickLogs',x:center_x,y:center_y}));
 }
 
 elementosRadio();
