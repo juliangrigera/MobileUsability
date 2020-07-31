@@ -47,6 +47,7 @@ function pointermove_handler(ev) {
    document.getElementById("t2X").innerText = evCache[1].pageX.toFixed(2);
    document.getElementById("t1Y").innerText = evCache[0].pageY.toFixed(2);
    document.getElementById("t2Y").innerText = evCache[1].pageY.toFixed(2);
+   
    if (prevDiff > 0) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
@@ -113,8 +114,9 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
   for (var i=0, max=todos.length; i < max; i++) {
       if( insidePinch(zeroX, oneX, zeroY, oneY, todos[i].getBoundingClientRect()) ){
         console.log(createXPathFromElement(todos[i]));
+       
         console.log("Font size: " + window.getComputedStyle(todos[i]).fontSize );
-        elemento = {eventType: 'zoomPinch', FontSize: window.getComputedStyle(todos[i]).fontSize, XPath: createXPathFromElement(todos[i]) };
+        elemento = {FontSize: window.getComputedStyle(todos[i]).fontSize, XPath: createXPathFromElement(todos[i]) };
 
 
     
@@ -122,44 +124,36 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
            htmlElements.push(elemento);
       }
   }
-  logEventPharoPinch(JSON.stringify(htmlElements));
+
+  logEventPharo(JSON.stringify({class: 'PinchZoom', timeStamp: new Date().getTime(), elements: htmlElements}));
 }
 
 function insidePinch(x1, x2, y1, y2, elemRect){
-if (Math.abs(x1 - x2) > Math.abs(y1 - y2)){
-//zoomPinch Horizontal
-
-//hago que x1 sea el dedo que está más a la izquierda, para facilitar comparaciones
-if (x1 > x2){
-  aux = x1;
-  x1 = x2;
-  x2 = aux;
-}
-
-if(elemRect.left >= x1 && elemRect.left <= x2 || elemRect.right >= x1 && elemRect.right <= x2 ){
-  if(elemRect.top <= y1 && elemRect.bottom >= y1 || elemRect.top <= y2 && elemRect.bottom >= y2){
-      return true;
+  if (x1 > x2){
+    aux = x1;
+    x1 = x2;
+    x2 = aux;
   }
-return false;
-}
-else{
-  //zoomPinch Vertical
-
-  //hago que y1 sea el dedo que está más arriba, para facilitar comparaciones
-
   if (y1 > y2){
     aux = y1;
     y1 = y2;
     y2 = aux;
   }
-  if(elemRect.top >= y1 && elemRect.top <= y2 || elemRect.bottom >= y1 && elemRect.bottom <= y2 ){
-    if(elemRect.left <= x1 && elemRect.right >= x1 || elemRect.left <= x2 && elemRect.right >= x2){
-        return true;
-    }
-  return false;
+  if((elemRect.top >= y1 && elemRect.top <= y2) && ((x1 >= elemRect.left && x1 <= elemRect.right ) || (x2 >= elemRect.left && x2 <= elemRect.right ))){
+      return true;
   }
+  
+  if((elemRect.bottom >= y1 && elemRect.bottom <= y2) && ((x1 >= elemRect.left && x1 <= elemRect.right ) || (x2 >= elemRect.left && x2 <= elemRect.right ))){
+    return true;
 }
-}}
+if((elemRect.left >= x1 && elemRect.left <= x2) && ((y1 >= elemRect.top && y1 <= elemRect.bottom ) || (x2 >= elemRect.top && x2 <= elemRect.bottom ))){
+  return true;
+}
+if((elemRect.right >= x1 && elemRect.right <= x2) && ((y1 >= elemRect.top && y1 <= elemRect.bottom ) || (x2 >= elemRect.top && x2 <= elemRect.bottom ))){
+return true;
+}
+}
+
 
     
 
@@ -184,6 +178,7 @@ function logEventPharoPinch (jsonElements) {
   var url = "http://localhost:1701/register";
 
 
+ console.log(jsonElements);
   http.open("POST", url, true);
 
 
@@ -208,7 +203,7 @@ function logEventPharoPinch (jsonElements) {
  window.onpointerleave = pointerup_handler;
 
  document.addEventListener('touchend', (event) => {
-  removeStyleElementsInRadioPrevious();
+  setTimeout(removeStyleElementsInRadioPrevious, 3000);
 });
  
 
