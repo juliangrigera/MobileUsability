@@ -103,7 +103,7 @@ function logEventPharo (center_x, center_y) {
         alert(http.responseText);
         }
     }
-   http.send(JSON.stringify({class:'MissClickLogs',x:center_x,y:center_y}));
+   http.send(JSON.stringify({class:'Misclick',x:center_x,y:center_y}));
 }
 
 elementosRadio();
