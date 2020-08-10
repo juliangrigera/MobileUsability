@@ -7,6 +7,11 @@ Class {
 	#category : #'MobileUsability-model'
 }
 
+{ #category : #'instance creation' }
+UsabilityLogs class >> newFromDictionary: aDictionary [
+	^ self subclassResponsibility 
+]
+
 { #category : #accessing }
 UsabilityLogs >> timestamp [
 	^ timestamp

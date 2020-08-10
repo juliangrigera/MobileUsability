@@ -52,12 +52,8 @@ super initialize .
 
 { #category : #rendering }
 HomeComponent >> renderBodyOn: html [
-	html navigationLink
-		url: 'https://github.com/astares/Seaside-Bootstrap4';
-		with: 'Bootstrap4 for Seaside'.
-	html jumbotron: [ html heading: 'Bootstrap4 for Seaside' ].
 	html heading
-		level: 2;
+		level: 3;
 		with: 'MissClick Logs!'.
 	self renderLogsOn: html
 ]
@@ -68,17 +64,6 @@ HomeComponent >> renderContentOn: html [
 	html horizontalRule.
 	self renderBodyOn: html.
 	html heading level2 with: 'Examples'.
-	html horizontalRule
-]
-
-{ #category : #rendering }
-HomeComponent >> renderJSONOn: html element: each [
-	html horizontalRule.
-	html text: (NeoJSONWriter
-		new;
-		toStringPretty: each).
-	html break.
-
 	html horizontalRule
 ]
 
@@ -109,7 +94,7 @@ HomeComponent >> renderLogOn: html element: each [
 HomeComponent >> renderLogsOn: html [
 	sistema logs
 		ifNil: [ html text: 'No hay logs.' ]
-		ifNotNil: [ sistema logs do: [ :ele | self renderJSONOn: html element: ele ] ]
+		ifNotNil: [ sistema logs do: [ :ele | self renderLogOn: html element:ele  ] ]
 ]
 
 { #category : #rendering }
