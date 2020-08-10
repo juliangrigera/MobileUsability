@@ -44,7 +44,29 @@
 
     setTimerScrollEvent();
 
-  });   
+
+    // para enviar los datos a Pharo
+    logEventPharoScroll(JSON.stringify({class:'Scroll', timestamp: new Date().getTime(), x: x,
+    y: y}));
+  }); 
+  
+  // se tendría que refactorizar esto
+  function logEventPharoScroll (jsonElements) {
+    var http = new XMLHttpRequest ();
+    var url = "http://localhost:1701/register";
+  
+  
+    http.open("POST", url, true);
+  
+  
+    http.onreadystatechange = function() {
+        if(http.readyState == 4 && http.status == 200) { 
+        //aqui obtienes la respuesta de tu peticion
+        alert(http.responseText);
+        }
+    }
+   http.send(jsonElements);
+  }
 
   function setTimerScrollEvent()
   { //carga el nuevo evento y resetea el timer
