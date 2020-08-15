@@ -11,10 +11,10 @@ Class {
 
 { #category : #'instance creation' }
 Misclick class >> newFromDictionary: aDictionary [
-^(self new) cordX: (aDictionary at:'x') ; cordY: (aDictionary at: 'y').
- 
- 
- 
+	^ self new
+		cordX: (aDictionary at: 'x');
+		cordY: (aDictionary at: 'y');
+		timestamp: (aDictionary at: 'timestamp').
 ]
 
 { #category : #accessing }

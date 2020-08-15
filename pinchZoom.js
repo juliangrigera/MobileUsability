@@ -125,7 +125,7 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
       }
   }
 
-  logEventPharo(JSON.stringify({class: 'PinchZoom', timeelementstamp: new Date().getTime(), elements: htmlElements}));
+  logEventPharoPinch(JSON.stringify({class:'PinchZoom', timestamp: new Date().getTime(), elements: htmlElements}));
 }
 
 function insidePinch(x1, x2, y1, y2, elemRect){
@@ -173,12 +173,12 @@ return true;
   };
 
 }  
+
 function logEventPharoPinch (jsonElements) {
   var http = new XMLHttpRequest ();
   var url = "http://localhost:1701/register";
 
 
- console.log(jsonElements);
   http.open("POST", url, true);
 
 
@@ -188,7 +188,7 @@ function logEventPharoPinch (jsonElements) {
       alert(http.responseText);
       }
   }
-  http.send(jsonElements);
+ http.send(jsonElements);
 }
 
   var zoomInfo=document.getElementById("target");
