@@ -10,7 +10,7 @@ Class {
 { #category : #'instance creation' }
 PinchZoom class >> newFromDictionary: aDictionary [
 	^ self new
-		timestamp: (aDictionary at: 'timestamp');
+		timestamp: (DateAndTime fromUnixTime: (aDictionary at: 'timestamp') / 1000);
 		elements: (aDictionary at: 'elements')
 ]
 

@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 Scroll class >> newFromDictionary: aDictionary [
 	^ self new
-		timestamp: (aDictionary at: 'timestamp');
+		timestamp: (DateAndTime fromUnixTime: (aDictionary at: 'timestamp') / 1000);
 		distanceXpx: (aDictionary at: 'x');
 		distanceYpx: (aDictionary at: 'y')
 ]
