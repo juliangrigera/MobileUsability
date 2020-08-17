@@ -3,6 +3,7 @@
   {  
     constructor(pointX, pointY)
     {
+      this.class ="ScrollPoint";
       this.pointX=pointX;
       this.pointY=pointY;
     }
@@ -12,7 +13,7 @@
   {//parametros por defecto x = 0, y = 0
     constructor( )
     {
-      this.class ="scroll";
+      this.class ="Scroll";
       this.timestamp = Date.now();
       this.domScrollObj;
       this.arrayScrollPoints = new Array( );
@@ -41,10 +42,13 @@
     console.log(">>>> Escroll Event ");
     //itera sobre todo el arbol de elementos de body buscando candidatos para el eventScroll 
     findScrollElements( document.body );
-    //solo falta agregarle el evento al scroll de body que no es cuando los hijos son mas grandes
-    //sino que la cantidad de hijos desborda al padre 
-
+    
+    //caso especial body (body no conoce "scrollTop" "scrollLeft" ) 
+    //document se le envia documentElement para recuperar body y se puedan consultar  scrollTop
+    window.onscroll = (event) => { onScrollEvent(event,document.documentElement) };
+    
   }
+
 
   function findScrollElements( domNode )
   {
@@ -53,21 +57,29 @@
     {
       detectElemtsScroll(domNode, domCollection);
       findScrollElements( domCollection[i] );
-    }
+    } //recursivo en todo el arbol de elementos
   }
 
   function detectElemtsScroll(container, listContents)
   { //revisa si alguno de los hijos contendio es mayor al contenedor
+    let sumHeightContent=0;
     for ( let i=0;i < listContents.length ;i++)
     {
       if( isOverflowContent(container, listContents[i]) )
-      {
-        // console.log("event Scroll Insert");
-        // console.log(container);
+      { // console.log("event Scroll Insert");
         setScrollEvent(container);   
         return true;
+      }else
+      { //falta revisar la suma de todos los altos heigth supera el contenedor
+        sumHeightContent = sumHeightContent + listContents[i].offsetHeight;
       }
     }
+
+    if(sumHeightContent > container.offsetHeight )
+    { //si la suma de alturas del contenido es mayor a la altura del contenedor
+      setScrollEvent(container); 
+    }
+
   }
 
   //si el elemento de contenido es mayor a contenedor hay scroll
@@ -84,27 +96,33 @@
     return false;
   }
 
-  function setScrollEvent( domNode )
-  {
-    domNode.addEventListener("scroll",(event) => {
-
-      if( domCurrentObj == null || event.target.isSameNode(domCurrentObj) )
-      { 
-        scrollEventInfo.addScrollPoint( new ScrollPoints(domNode.scrollLeft, domNode.scrollTop) );
-        setTimerScrollEvent();
-      }else
-      { //stop timer
-        clearTimeout(scrollTimerEventId); 
-        //send info Scroll 
-        sendDataScrollEvent();
-        // reset info Data
-        scrollEventInfo.addScrollPoint( new ScrollPoints(domNode.scrollLeft, domNode.scrollTop) );
-        setTimerScrollEvent();
-      }
-      domCurrentObj = event.target;
-    
+  function setScrollEvent( containerDomNode )
+  { // containerDomNode es el contenedor de scroll event
+    containerDomNode.addEventListener("scroll",(event) => {
+      onScrollEvent(event,containerDomNode);
     });
   }
+
+
+  // evento principal que recolecta los datos del scroll
+  function onScrollEvent(event,domNode)
+  { //si el croll se mantiene en el mismo obj o se iso scroll en otro pbj
+    if( domCurrentObj == null || event.target.isSameNode(domCurrentObj) )
+    { 
+      scrollEventInfo.addScrollPoint( new ScrollPoints(domNode.scrollLeft, domNode.scrollTop) );
+      setTimerScrollEvent();
+    }else
+    { //stop timer
+      clearTimeout(scrollTimerEventId); 
+      //send info Scroll 
+      sendDataScrollEvent();
+      // reset info Data
+      scrollEventInfo.addScrollPoint( new ScrollPoints(domNode.scrollLeft, domNode.scrollTop) );
+      setTimerScrollEvent();
+    }
+    domCurrentObj = event.target;
+  }
+
 
   function setTimerScrollEvent()
   { //carga el nuevo evento y resetea el timer
@@ -112,13 +130,12 @@
     scrollTimerEventId = window.setTimeout( sendDataScrollEvent, 1500 );
   }
 
-
   // scrollEventInfo es un objeto de la CLASE ScrollEventInfo que esta arriba
     // {
     //   class:"scroll",
     //   timestamp: Date.now(),
     //   domScrollObj:"referencia al obj que realizo el scroll",
-    //   arrayScrollPoints:[ {"pointX":0,"pointY":52},{"pointX":0,"pointY":49} .... ];
+    //   arrayScrollPoints:[ {class:"ScrollPoint","pointX":0,"pointY":52},  .... ];
     // }  
   
   //arrayScrollPoints  es una colleccion de obj "ScrollPoints" que solo tiene dos atributos x,y
@@ -127,15 +144,15 @@
   function sendDataScrollEvent()
   { //info Consola
     console.log(">>>>>>>>>>> Send scroll Event <<<<<<<<<<<");
-    console.log(domCurrentObj);
-    console.log( JSON.stringify(scrollEventInfo) );
+    // console.log(domCurrentObj);
+    // console.log( JSON.stringify(scrollEventInfo) );
     
     //referencia al obj que se realizo el evento
     scrollEventInfo.setDomScrollObj( createXPathFromElement( domCurrentObj ) );
 
   //>>>>>>>>> LLAMAR a la funcion que envia los Datos a SERVER <<<<<<<<<<<<<<
    // logEventPharoScroll( JSON.stringify( scrollEventInfo ) );
-    
+   
     resetScrollDataInfo();
   }
 
