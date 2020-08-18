@@ -3,11 +3,12 @@
 function makeRequest(jsonElements){
 
 var http = new XMLHttpRequest ();
-var url = "http://04b308a2e021.ngrok.io/register";
+var url = "http://localhost:1701/register";
 /*var email = document.getElementById('email');
 var password = document.getElementById('pass');"*/
 
 http.open("POST", url, true);
+
 
 
 http.onreadystatechange = function() {
@@ -16,6 +17,7 @@ http.onreadystatechange = function() {
        alert(http.responseText);
     }
 }
+
 http.send(jsonElements);
 
 }
