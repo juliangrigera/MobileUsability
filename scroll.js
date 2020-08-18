@@ -3,7 +3,6 @@
   {  
     constructor(pointX, pointY)
     {
-      this.class ="ScrollPoint";
       this.pointX=pointX;
       this.pointY=pointY;
     }
@@ -36,17 +35,15 @@
   scrollEventInitialize();
 
 
-
   function scrollEventInitialize()
   {
-    console.log(">>>> Escroll Event ");
+    console.log(">>>> Escroll Event Initialize ");
     //itera sobre todo el arbol de elementos de body buscando candidatos para el eventScroll 
     findScrollElements( document.body );
     
     //caso especial body (body no conoce "scrollTop" "scrollLeft" ) 
     //document se le envia documentElement para recuperar body y se puedan consultar  scrollTop
     window.onscroll = (event) => { onScrollEvent(event,document.documentElement) };
-    
   }
 
 
@@ -79,7 +76,6 @@
     { //si la suma de alturas del contenido es mayor a la altura del contenedor
       setScrollEvent(container); 
     }
-
   }
 
   //si el elemento de contenido es mayor a contenedor hay scroll
@@ -123,7 +119,6 @@
     domCurrentObj = event.target;
   }
 
-
   function setTimerScrollEvent()
   { //carga el nuevo evento y resetea el timer
     clearTimeout(scrollTimerEventId);
@@ -134,8 +129,8 @@
     // {
     //   class:"scroll",
     //   timestamp: Date.now(),
-    //   domScrollObj:"referencia al obj que realizo el scroll",
-    //   arrayScrollPoints:[ {class:"ScrollPoint","pointX":0,"pointY":52},  .... ];
+    //  , domScrollObj:"referencia al obj que realizo el scroll"
+    //   arrayScrollPoints:[ {"pointX":0,"pointY":52},  .... ];
     // }  
   
   //arrayScrollPoints  es una colleccion de obj "ScrollPoints" que solo tiene dos atributos x,y
@@ -143,16 +138,15 @@
 // envia la info del evento scroll
   function sendDataScrollEvent()
   { //info Consola
-    console.log(">>>>>>>>>>> Send scroll Event <<<<<<<<<<<");
-    // console.log(domCurrentObj);
-    // console.log( JSON.stringify(scrollEventInfo) );
+    console.log(">> Send scroll Event Info ");
+    //console.log(domCurrentObj);
+    //console.log( JSON.stringify(scrollEventInfo) );
     
     //referencia al obj que se realizo el evento
     scrollEventInfo.setDomScrollObj( createXPathFromElement( domCurrentObj ) );
-
-  //>>>>>>>>> LLAMAR a la funcion que envia los Datos a SERVER <<<<<<<<<<<<<<
-   // logEventPharoScroll( JSON.stringify( scrollEventInfo ) );
-   
+    //envio de info a Pharo server
+    logEventPharoScroll( JSON.stringify( scrollEventInfo ) );
+     
     resetScrollDataInfo();
   }
 
@@ -162,37 +156,28 @@
     domCurrentObj = null;
   }
 
-  //para enviar los datos a Pharo
+  //>>>>>>>>>para enviar los datos a Pharo
   
-    //   logEventPharoScroll(JSON.stringify({class:'Scroll', timestamp: new Date().getTime(), x: x,
-    // y: y} ));
-
-  
-  // se tendría que refactorizar esto
   function logEventPharoScroll (jsonElements) {
     var http = new XMLHttpRequest ();
     var url = "http://localhost:1701/register";
   
-  
     http.open("POST", url, true);
-  
   
     http.onreadystatechange = function() {
         if(http.readyState == 4 && http.status == 200) { 
         //aqui obtienes la respuesta de tu peticion
-        alert(http.responseText);
+        //alert(http.responseText);
         }
     }
    http.send(jsonElements);
   }
 
-  // function sendDataScrollEvent2()
+  // function logEventPharoScroll(scrollEventInfo)
   // { 
   //   const data = scrollEventInfo;
-  //   //reset initial data 
-  //   scrollEventInfo = new ScrollEventInfo();
 
-  //   fetch('http://localhost:8000/ejemplo.php', {
+  //   fetch('http://localhost:1701/register', {
   //     method: 'POST', // or 'PUT'
   //     headers: {
   //       'Content-Type': 'application/json',
@@ -206,7 +191,6 @@
   //    .catch((error) => {
   //      console.error('Error:', error);
   //    });
-
   // }
 
   function createXPathFromElement(elm) { 
