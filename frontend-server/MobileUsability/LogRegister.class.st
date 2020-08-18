@@ -27,13 +27,14 @@ server
 
 	
 POST: '/register' -> [:request || log | 
-log:=(NeoJSONReader fromString: request contents ).
-LogRegister soleInstance addLog:((Smalltalk at:(log at:'class') asSymbol ) newFromDictionary: log).	
+	log:=(NeoJSONReader fromString: request contents ).
+	
+		LogRegister soleInstance addLog:((Smalltalk at:(log at:'class') asSymbol ) newFromDictionary: log).	
 	
 		TeaResponse ok
 						headerName: 'Access-Control-Allow-Origin' value: '*';
 						yourself
-];
+	];
 	 start
 .
 ]
