@@ -14,7 +14,7 @@ http.open("POST", url, true);
 http.onreadystatechange = function() {
     if(http.readyState == 4 && http.status == 200) { 
        //aqui obtienes la respuesta de tu peticion
-       alert(http.responseText);
+  
     }
 }
 

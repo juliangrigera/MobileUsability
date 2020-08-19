@@ -14,7 +14,7 @@ function elementosRadio(){
     window.addEventListener("click", (event) => {
 
         printProperties( event.clientX, event.clientY, 55 );
-        logEventPharo( event.clientX, event.clientY);
+        makeRequest(JSON.stringify({class:'Misclick',x:event.clientX,y:event.clientY,timestamp:new Date().getTime()}));
         removeDotItemPrevious();
         removeStyleElementsInRadioPrevious();
 

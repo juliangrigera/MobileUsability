@@ -145,7 +145,7 @@
     //referencia al obj que se realizo el evento
     scrollEventInfo.setDomScrollObj( createXPathFromElement( domCurrentObj ) );
     //envio de info a Pharo server
-    logEventPharoScroll( JSON.stringify( scrollEventInfo ) );
+    makeRequest( JSON.stringify( scrollEventInfo ) );
      
     resetScrollDataInfo();
   }
@@ -158,7 +158,7 @@
 
   //>>>>>>>>>para enviar los datos a Pharo
   
-  function logEventPharoScroll (jsonElements) {
+/*   function logEventPharoScroll (jsonElements) {
     var http = new XMLHttpRequest ();
     var url = "http://localhost:1701/register";
   
@@ -172,7 +172,7 @@
     }
    http.send(jsonElements);
   }
-
+ */
   // function logEventPharoScroll(scrollEventInfo)
   // { 
   //   const data = scrollEventInfo;

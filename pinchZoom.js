@@ -43,23 +43,23 @@ function pointermove_handler(ev) {
  if (evCache.length == 2) {
    // Calculate the distance between the two pointers
    var curDiff = Math.abs(evCache[0].clientX - evCache[1].clientX);
-   document.getElementById("t1X").innerText = evCache[0].pageX.toFixed(2);
+/*    document.getElementById("t1X").innerText = evCache[0].pageX.toFixed(2);
    document.getElementById("t2X").innerText = evCache[1].pageX.toFixed(2);
    document.getElementById("t1Y").innerText = evCache[0].pageY.toFixed(2);
-   document.getElementById("t2Y").innerText = evCache[1].pageY.toFixed(2);
+   document.getElementById("t2Y").innerText = evCache[1].pageY.toFixed(2); */
    
    if (prevDiff > 0) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
        stopPinchReport();
        pinchReport(evCache[0].clientX, evCache[1].clientX, evCache[0].clientY, evCache[1].clientY);
-       zoomInfo.style.background  = "pink";
+      //  zoomInfo.style.background  = "pink";
      }
      if (curDiff < prevDiff) {
        // The distance between the two pointers has decreased
        stopPinchReport();
        pinchReport(evCache[0].clientX, evCache[1].clientX, evCache[0].clientY, evCache[1].clientY);
-       zoomInfo.style.background  = "lightblue";
+      //  zoomInfo.style.background  = "lightblue";
      }
    }
 
