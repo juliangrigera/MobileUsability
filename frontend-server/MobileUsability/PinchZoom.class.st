@@ -2,7 +2,8 @@ Class {
 	#name : #PinchZoom,
 	#superclass : #UsabilityLogs,
 	#instVars : [
-		'elements'
+		'elements',
+		'percentage'
 	],
 	#category : #'MobileUsability-model'
 }
