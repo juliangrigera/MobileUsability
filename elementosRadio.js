@@ -50,11 +50,11 @@ function removeStyleElementsInRadioPrevious(){
 
 function elementsInRadio( center_x, center_y, radio, todos ){
     let htmlElements = new Array();
-    console.log("Los elementos son: ");
+    // console.log("Los elementos son: ");
 
     for (var i=0, max=todos.length; i < max; i++) {
         if( intersectan(center_x, center_y, radio, todos[i].getBoundingClientRect()) ){
-            console.log(todos[i]);
+            // console.log(todos[i]);
             todos[i].classList.add("boxShadow");
             htmlElements.push( todos[i] );
         }
@@ -84,9 +84,11 @@ function addStyleElementsInRadio( htmlElements ){
 }
 
 function printProperties( center_x, center_y, radio){
-    console.log("*********************************************");
+/*     console.log("*********************************************");
     console.log("Las coordenadas del click son x: " +center_x+" y:"+center_y)  
-    console.log("El radio seleccionado es de: "+radio+"px");
+    console.log("El radio seleccionado es de: "+radio+"px"); */
+    console.log(">>send click event info");
+
 }
 
 function logEventPharo (center_x, center_y) {

@@ -113,9 +113,8 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
  
   for (var i=0, max=todos.length; i < max; i++) {
       if( insidePinch(zeroX, oneX, zeroY, oneY, todos[i].getBoundingClientRect()) ){
-        console.log(createXPathFromElement(todos[i]));
-       
-        console.log("Font size: " + window.getComputedStyle(todos[i]).fontSize );
+       /*  console.log(createXPathFromElement(todos[i]));
+        console.log("Font size: " + window.getComputedStyle(todos[i]).fontSize ); */
         elemento = {FontSize: window.getComputedStyle(todos[i]).fontSize, XPath: createXPathFromElement(todos[i]) };
 
 
@@ -124,7 +123,7 @@ function elementsInPinch(zeroX, zeroY, oneX, oneY){
            htmlElements.push(elemento);
       }
   }
-
+  console.log(">> send pinchzoom event info");
   makeRequest(JSON.stringify({class:'PinchZoom', timestamp: new Date().getTime(), elements: htmlElements}));
 }
 
