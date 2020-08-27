@@ -11,11 +11,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-LogRegister class >> clearSoleInstance [
-	soleInstance := nil
-]
-
-{ #category : #'as yet unclassified' }
 LogRegister class >> setupServer [
 "Configuracion de TeaPot"
 |server|
@@ -46,8 +41,18 @@ soleInstance ifNil: [soleInstance := self new ].
 ]
 
 { #category : #accessing }
+LogRegister class >> soleInstance: anObject [
+	soleInstance := anObject
+]
+
+{ #category : #accessing }
 LogRegister >> addLog:aLog [
 	self logs add: aLog
+]
+
+{ #category : #accessing }
+LogRegister >> clearSoleInstance [
+	self class  soleInstance: nil
 ]
 
 { #category : #'as yet unclassified' }

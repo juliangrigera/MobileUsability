@@ -45,6 +45,12 @@ HomeComponent class >> initialize [
 ]
 
 { #category : #initialization }
+HomeComponent >> clearLogs [
+	self sistema clearSoleInstance.
+	self call: self class new
+]
+
+{ #category : #initialization }
 HomeComponent >> initialize [
 super initialize .
 	sistema := LogRegister soleInstance
@@ -62,7 +68,7 @@ HomeComponent >> renderClearButtonOn: html [
 	html
 		form: [ html outlineButton
 				beDanger;
-				callback: [ sistema:=sistema clearSoleInstance ];
+				callback: [ self clearLogs ];
 				with: 'Clear logs' ]
 ]
 
