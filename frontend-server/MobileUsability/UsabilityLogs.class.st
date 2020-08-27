@@ -12,6 +12,21 @@ UsabilityLogs class >> newFromDictionary: aDictionary [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #testing }
+UsabilityLogs >> isMissclick [
+^ false
+]
+
+{ #category : #testing }
+UsabilityLogs >> isPinchZoom [
+	^ false
+]
+
+{ #category : #testing }
+UsabilityLogs >> isScroll [
+	^ false
+]
+
 { #category : #accessing }
 UsabilityLogs >> timestamp [
 	^ timestamp

@@ -34,3 +34,8 @@ CoordinatePoint >> cordY [
 CoordinatePoint >> cordY: anObject [
 	cordY := anObject
 ]
+
+{ #category : #printing }
+CoordinatePoint >> printPoints [
+	^ '  [' , cordX asString , ' , ' , cordY asString , ']  '
+]

@@ -52,19 +52,29 @@ super initialize .
 
 { #category : #rendering }
 HomeComponent >> renderBodyOn: html [
-	html heading
-		level: 3;
-		with: 'MissClick Logs!'.
+
+	self renderClearButtonOn: html.
 	self renderLogsOn: html
+]
+
+{ #category : #initialization }
+HomeComponent >> renderClearButtonOn: html [
+	html
+		form: [ html outlineButton
+				beDanger;
+				callback: [ sistema:=sistema clearSoleInstance ];
+				with: 'Clear logs' ]
 ]
 
 { #category : #rendering }
 HomeComponent >> renderContentOn: html [
 	html heading: 'Logs Viewer'.
+		html navigationLink
+		url: 'https://github.com/juliangrigera/MobileUsability';
+		with: 'MobileUsability'.
 	html horizontalRule.
-	self renderBodyOn: html.
-	html heading level2 with: 'Examples'.
-	html horizontalRule
+
+	self renderBodyOn: html
 ]
 
 { #category : #rendering }
@@ -92,13 +102,87 @@ HomeComponent >> renderLogOn: html element: each [
 
 { #category : #rendering }
 HomeComponent >> renderLogsOn: html [
-	sistema logs
+	self sistema logs
 		ifNil: [ html text: 'No hay logs.' ]
-		ifNotNil: [ sistema logs do: [ :ele | self renderLogOn: html element:ele  ] ]
+		ifNotNil: [ html horizontalRule.
+				html heading
+		level: 3;
+		with: 'MissClick Logs!'.
+			self renderMcLogsOn: html col: self sistema getMcLogs.
+			html horizontalRule.
+				html heading
+		level: 3;
+		with: 'PinchZoom Logs!'.
+			self renderPzLogsOn: html col: self sistema getPzLogs.
+			html horizontalRule.
+				html heading
+		level: 3;
+		with: 'Scroll Logs!'.
+			self renderScLogsOn: html col: self sistema getScLogs ]
+]
+
+{ #category : #rendering }
+HomeComponent >> renderMcLogsOn: html col: aMcCol [
+
+	html table
+		class: 'table table-bordered';
+		with: [ html
+				tableHead: [ html
+						tableRow: [ html tableHeading: 'Timestamp'.
+							html tableHeading: 'Cord X'.
+							html tableHeading: 'Cord Y'.
+							html tableHeading: 'Elementos' ] ].
+			html
+				tableBody: [ aMcCol
+						do: [ :ele | 
+							html
+								tableRow: [ html tableData: ele timestamp.
+									html tableData: ele cordX.
+									html tableData: ele cordY.
+									html tableData: ele elements ] ] ] ].
+]
+
+{ #category : #rendering }
+HomeComponent >> renderPzLogsOn: html col: aPzCol [
+	html table
+		class: 'table table-bordered';
+		with: [ html
+				tableHead: [ html
+						tableRow: [ html tableHeading: 'Timestamp'.
+							html tableHeading: 'Elementos' ] ].
+			html
+				tableBody: [ aPzCol
+						do: [ :ele | 
+							html
+								tableRow: [ html tableData: ele timestamp.
+									html tableData: ele elements ] ] ] ].
+]
+
+{ #category : #rendering }
+HomeComponent >> renderScLogsOn: html col: aScCol [
+	html table
+		class: 'table table-bordered';
+		with: [ html
+				tableHead: [ html
+						tableRow: [ html tableHeading: 'Timestamp'.
+							html tableHeading: 'Dom Ref '.
+							html tableHeading: 'Scroll Points' ] ].
+			html
+				tableBody: [ aScCol
+						do: [ :ele | 
+							html
+								tableRow: [ html tableData: ele timestamp.
+									html tableData: ele domRefObject.
+									html tableData: ele printAllScrollPoints  ] ] ] ]
 ]
 
 { #category : #rendering }
 HomeComponent >> rendererClass [
 	^ SBSHtmlCanvas
 
+]
+
+{ #category : #accessing }
+HomeComponent >> sistema [
+	^ sistema
 ]

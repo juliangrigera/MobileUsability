@@ -46,3 +46,8 @@ Misclick >> elements [
 Misclick >> elements: anObject [
 	elements := anObject
 ]
+
+{ #category : #accessing }
+Misclick >> isMissclick [
+	^ true
+]

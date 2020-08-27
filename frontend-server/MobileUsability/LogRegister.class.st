@@ -50,6 +50,21 @@ LogRegister >> addLog:aLog [
 	self logs add: aLog
 ]
 
+{ #category : #'as yet unclassified' }
+LogRegister >> getMcLogs [
+	^ self logs select: [ :log | log isMissclick ]
+]
+
+{ #category : #'as yet unclassified' }
+LogRegister >> getPzLogs [
+	^ self logs select: [ :log | log isPinchZoom ]
+]
+
+{ #category : #'as yet unclassified' }
+LogRegister >> getScLogs [
+	^ self logs select:[ :log | log isScroll ].
+]
+
 { #category : #initialization }
 LogRegister >> initialize [
 logs:=OrderedCollection new.

@@ -25,6 +25,11 @@ PinchZoom >> elements: anObject [
 	elements := anObject
 ]
 
+{ #category : #testing }
+PinchZoom >> isPinchZoom [
+	^ true
+]
+
 { #category : #accessing }
 PinchZoom >> percentage [
 	^ percentage

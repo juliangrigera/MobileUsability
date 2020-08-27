@@ -41,6 +41,18 @@ Scroll >> initialize [
 	scrollPoints := OrderedCollection new
 ]
 
+{ #category : #testing }
+Scroll >> isScroll [
+	^ true
+]
+
+{ #category : #accessing }
+Scroll >> printAllScrollPoints [
+^scrollPoints
+		inject: ''
+		into: [ :text :each | text , each printPoints ]
+]
+
 { #category : #accessing }
 Scroll >> scrollPoints [
 	^ scrollPoints
