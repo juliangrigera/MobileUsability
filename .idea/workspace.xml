@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6791edb2-482f-4773-ada9-f308a01a9cdc" name="Default Changelist" comment="" />
+    <list default="true" id="6791edb2-482f-4773-ada9-f308a01a9cdc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MobileEvents.js" beforeDir="false" afterPath="$PROJECT_DIR$/MobileEvents.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/elementosRadio.js" beforeDir="false" afterPath="$PROJECT_DIR$/elementosRadio.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,10 +34,17 @@
       <option name="presentableId" value="Default" />
       <updated>1597944156898</updated>
       <workItem from="1597944162396" duration="2502000" />
+      <workItem from="1599064827986" duration="2652000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1863" y="1" width="815" height="793" key="dock-window-1" timestamp="1599068855544">
+      <screen x="-1920" y="1" width="1920" height="1040" />
+    </state>
+    <state x="-1863" y="1" width="815" height="793" key="dock-window-1/0.0.1536.824/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1599068855544" />
   </component>
 </project>

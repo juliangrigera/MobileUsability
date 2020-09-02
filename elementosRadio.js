@@ -14,12 +14,14 @@ function elementosRadio(){
     window.addEventListener("click", (event) => {
 
         printProperties( event.clientX, event.clientY, 55 );
-        makeRequest(JSON.stringify({class:'Misclick',x:event.clientX,y:event.clientY,timestamp:new Date().getTime()}));
         removeDotItemPrevious();
         removeStyleElementsInRadioPrevious();
 
        // let todos = document.getElementsByTagName("*");
         let htmlElements = elementsInRadio( event.clientX, event.clientY, 55,  document.getElementsByTagName("*") );
+        console.log(htmlElements)
+        makeRequest(JSON.stringify({class:'Misclick',x:event.clientX,y:event.clientY, elements: htmlElements,timestamp:new Date().getTime()}));
+
         //asignarle a los elemetos un style
         //addStyleElementsInRadio( htmlElements );
         writeDotItem();
@@ -54,9 +56,10 @@ function elementsInRadio( center_x, center_y, radio, todos ){
 
     for (var i=0, max=todos.length; i < max; i++) {
         if( intersectan(center_x, center_y, radio, todos[i].getBoundingClientRect()) ){
-            // console.log(todos[i]);
+             console.log(todos[i]);
             todos[i].classList.add("boxShadow");
-            htmlElements.push( todos[i] );
+
+            htmlElements.push( {XPath: createXPathFromElement(todos[i])});
         }
     }
     return htmlElements;
