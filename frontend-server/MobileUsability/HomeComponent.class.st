@@ -111,20 +111,25 @@ HomeComponent >> renderLogsOn: html [
 	self sistema logs
 		ifNil: [ html text: 'No hay logs.' ]
 		ifNotNil: [ html horizontalRule.
-				html heading
-		level: 3;
-		with: 'MissClick Logs!'.
+			html heading
+				level: 3;
+				with: 'Logs:'.
+				self renderTableHeaderOn:html.
+			"html horizontalRule.
+			html heading
+				level: 3;
+				with: 'MissClick Logs!'.
 			self renderMcLogsOn: html col: self sistema getMcLogs.
 			html horizontalRule.
-				html heading
-		level: 3;
-		with: 'PinchZoom Logs!'.
+			html heading
+				level: 3;
+				with: 'PinchZoom Logs!'.
 			self renderPzLogsOn: html col: self sistema getPzLogs.
 			html horizontalRule.
-				html heading
-		level: 3;
-		with: 'Scroll Logs!'.
-			self renderScLogsOn: html col: self sistema getScLogs ]
+			html heading
+				level: 3;
+				with: 'Scroll Logs!'.
+			self renderScLogsOn: html col: self sistema getScLogs" ]
 ]
 
 { #category : #rendering }
@@ -180,6 +185,32 @@ HomeComponent >> renderScLogsOn: html col: aScCol [
 								tableRow: [ html tableData: ele timestamp.
 									html tableData: ele domRefObject.
 									html tableData: ele printAllScrollPoints  ] ] ] ]
+]
+
+{ #category : #rendering }
+HomeComponent >> renderTableHeaderOn: html [
+	html table
+		class: 'table table-bordered';
+		with: [ html
+				tableHead: [ html
+						tableRow: [ html tableHeading: 'Tipo de log'.
+							html tableHeading: 'Timestamp'.
+							html tableHeading: 'Cord X'.
+							html tableHeading: 'Cord Y'.
+							html tableHeading: 'Elementos'.
+							html tableHeading: 'Dom Ref '.
+							html tableHeading: 'Scroll Points' ] ].
+			html
+				tableBody: [ self sistema logs
+						do: [ :ele | 
+							html
+								tableRow: [ html tableData: ele name.
+									html tableData: ele timestamp.
+									html tableData: ele cordX.
+									html tableData: ele cordY.
+									html tableData: ele elements .
+									html tableData: ele domRefObject.
+									html tableData: ele printAllScrollPoints] ] ] ]
 ]
 
 { #category : #rendering }
