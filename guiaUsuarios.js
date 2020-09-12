@@ -1,0 +1,3 @@
+
+    alert("Bienvenid@! Este sitio tiene varios errores de diseño y esta prueba permitirá detectarlos. A continuación le daremos unas instrucciones con simples pasos a seguir. Cuando esté listo@ presione OK. ");
+    alert("PRUEBA 1: En la parte inferior de la pantalla aparecerán 3 carteles. Intente cerrarlos presionando \"X\" en cada uno. Si por error es redirigido a otro sitio, vuelva hacia atrás y prosiga con la prueba. Cuando esté list@ presione OK. ")

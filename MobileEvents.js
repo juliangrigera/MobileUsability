@@ -3,7 +3,7 @@
 function makeRequest(jsonElements){
 
 var http = new XMLHttpRequest ();
-var url = "http://localhost:1701/register";
+var url = "http://mobilelogger.tk/register/log"
 /*var email = document.getElementById('email');
 var password = document.getElementById('pass');"*/
 

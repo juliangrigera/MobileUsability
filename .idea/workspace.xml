@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="6791edb2-482f-4773-ada9-f308a01a9cdc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/guiaUsuarios.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MobileEvents.js" beforeDir="false" afterPath="$PROJECT_DIR$/MobileEvents.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/elementosRadio.js" beforeDir="false" afterPath="$PROJECT_DIR$/elementosRadio.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sitios offline/IOMAHome/Bienvenidxs a IOMA – La Obra Social de lxs Empleadxs de la Provincia de Buenos Aires.html" beforeDir="false" afterPath="$PROJECT_DIR$/sitios offline/IOMAHome/Bienvenidxs a IOMA – La Obra Social de lxs Empleadxs de la Provincia de Buenos Aires.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -34,17 +60,33 @@
       <option name="presentableId" value="Default" />
       <updated>1597944156898</updated>
       <workItem from="1597944162396" duration="2502000" />
-      <workItem from="1599064827986" duration="2652000" />
+      <workItem from="1599064827986" duration="3436000" />
+      <workItem from="1599161564493" duration="18000" />
+      <workItem from="1599593415646" duration="3185000" />
+      <workItem from="1599776366256" duration="21000" />
+      <workItem from="1599776409057" duration="5000" />
+      <workItem from="1599922489014" duration="4912000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
-    <state x="-1863" y="1" width="815" height="793" key="dock-window-1" timestamp="1599068855544">
+    <state x="-1863" y="1" width="815" height="793" key="dock-window-1" timestamp="1599161583327">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state x="-1863" y="1" width="815" height="793" key="dock-window-1/0.0.1536.824/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1599068855544" />
+    <state x="-1863" y="1" width="815" height="793" key="dock-window-1/0.0.1536.824/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1599161583327" />
   </component>
 </project>
