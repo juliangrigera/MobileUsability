@@ -51,16 +51,43 @@ HomeComponent >> clearLogs [
 ]
 
 { #category : #initialization }
+HomeComponent >> downloadFile [
+	| filename |
+	self persistAllLogs.
+	filename := self logsviewerFileName asFileReference.
+	self requestContext
+		respond: [ :response | 
+			response
+				contentType: WAMimeType applicationOctetStream;
+				document: filename binaryReadStream contents;
+				attachmentWithFileName: self logsviewerFileName ]
+]
+
+{ #category : #initialization }
 HomeComponent >> initialize [
 super initialize .
 	sistema := LogRegister soleInstance
 ]
 
+{ #category : #initialization }
+HomeComponent >> logsviewerFileName [
+	^ 'logsviewer' , DateAndTime now asFileNameCompatibleString , '.fuel'
+]
+
+{ #category : #initialization }
+HomeComponent >> persistAllLogs [
+	FileStream
+		forceNewFileNamed: self logsviewerFileName
+		do:
+			[ :aStream | FLSerializer newDefault serialize: self sistema on: aStream binary ]
+]
+
 { #category : #rendering }
 HomeComponent >> renderBodyOn: html [
-
-	self renderClearButtonOn: html.
-	self renderLogsOn: html
+	self renderDownloadButtonOn: html.
+	self renderLogsOn: html.
+		html space.
+	self renderClearButtonOn: html
 ]
 
 { #category : #initialization }
@@ -81,6 +108,15 @@ HomeComponent >> renderContentOn: html [
 	html horizontalRule.
 
 	self renderBodyOn: html
+]
+
+{ #category : #initialization }
+HomeComponent >> renderDownloadButtonOn: html [
+	html
+		form: [ html outlineButton
+				beSuccess;
+				callback: [  self downloadFile ];
+				with: 'Download all logs' ]
 ]
 
 { #category : #rendering }
