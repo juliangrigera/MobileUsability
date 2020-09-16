@@ -6,13 +6,15 @@ Class {
 
 { #category : #baselines }
 BaselineOfMobileUsability >> baseline: spec [
-"Instala las dependencias y el paquete de  MobileUsability"
+	"Instala las dependencias y el paquete de  MobileUsability"
+
 	<baseline>
 	spec
 		for: #'pharo8.x'
 		do: [ self bootstrap: spec.
 			self neojson: spec.
 			self teapot: spec.
+			self fuel:spec.
 			spec
 				blessing: #baseline;
 				repository: 'https://github.com/juliangrigera/MobileUsability.git';
@@ -29,6 +31,17 @@ BaselineOfMobileUsability >> bootstrap: spec [
 			tmp2
 				loads: #('default');
 				repository: 'github://astares/Seaside-Bootstrap4:master/src' ]
+]
+
+{ #category : #baseline }
+BaselineOfMobileUsability >> fuel: spec [
+	spec
+		baseline: 'Fuel'
+		with: [ | tmp2 |
+			tmp2 := spec.
+			tmp2
+				loads: #('default');
+				repository: 'github://theseion/Fuel:3.0.2/repository' ]
 ]
 
 { #category : #baseline }
