@@ -14,7 +14,8 @@ Misclick class >> newFromDictionary: aDictionary [
 	^ self new
 		cordX: (aDictionary at: 'x');
 		cordY: (aDictionary at: 'y');
-		timestamp: (DateAndTime fromUnixTime: ((aDictionary at: 'timestamp') / 1000))
+		elements: (aDictionary at: 'elements');
+		timestamp: (DateAndTime fromUnixTime: (aDictionary at: 'timestamp') / 1000)
 ]
 
 { #category : #accessing }
