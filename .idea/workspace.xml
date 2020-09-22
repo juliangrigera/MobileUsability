@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6791edb2-482f-4773-ada9-f308a01a9cdc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/guiaUsuarios.js" beforeDir="false" afterPath="$PROJECT_DIR$/guiaUsuarios.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sitios offline/IOMAHome/Bienvenidxs a IOMA – La Obra Social de lxs Empleadxs de la Provincia de Buenos Aires.html" beforeDir="false" afterPath="$PROJECT_DIR$/sitios offline/IOMAHome/Bienvenidxs a IOMA – La Obra Social de lxs Empleadxs de la Provincia de Buenos Aires.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +65,8 @@
       <workItem from="1599776409057" duration="5000" />
       <workItem from="1599922489014" duration="5492000" />
       <workItem from="1600114195984" duration="3181000" />
-      <workItem from="1600203055484" duration="4691000" />
+      <workItem from="1600203055484" duration="5408000" />
+      <workItem from="1600802340207" duration="1293000" />
     </task>
     <servers />
   </component>
